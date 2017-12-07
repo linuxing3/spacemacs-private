@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: journal-title
+# key: jt
+# --
+
+#+TITLE: Journal Entry-  5 Dec 2017 (Tuesday)
+#+AUTHOR: xing wenju
+#+IRC: linuxing3 on freenode
+#+EMAIL: xingwenju@gmail.com
+#+STARTUP: overview

@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: nikola-title
+# key: nt
+# --
+
+#+BEGIN_COMMENT
+.. title: $0
+.. slug: $1
+.. date: 2017-11-16 11:08:38 UTC-04:00
+.. tags: $2
+.. category: emacs
+.. link: $3
+.. description: $4
+.. type: $5
+#+END_COMMENT
