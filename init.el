@@ -132,10 +132,8 @@ values."
      ;; ----------------------------------------------------------------
      ;; chinese
      ;; ----------------------------------------------------------------
-     (chinese :packages
-              youdao-dictionary
-              :variables 
-              chinese-enable-youdao-dict t)
+     ;; (chinese :variables 
+     ;;          chinese-enable-youdao-dict t)
      ;; ----------------------------------------------------------------
      ;; Private
      ;; ----------------------------------------------------------------
@@ -147,6 +145,7 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
                                       ox-reveal
+                                      youdao-dictionary
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
