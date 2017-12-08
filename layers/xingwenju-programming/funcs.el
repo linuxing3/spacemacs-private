@@ -9,7 +9,7 @@
 ;;
 ;;; License: GPLv3
 
-(defun xingwenju/comment-box (b e)
+(defun x/comment-box (b e)
   "Draw a box comment around the region but arrange for the region
 to extend to at least the fill column. Place the point after the
 comment box."
@@ -25,7 +25,7 @@ comment box."
 
 
 ;; "http://stackoverflow.com/questions/2242572/emacs-todo-indicator-at-left-side"
-(defun xingwenju/annotate-todo ()
+(defun x/annotate-todo ()
   "put fringe marker on TODO: lines in the curent buffer"
   (interactive)
   (save-excursion
@@ -37,22 +37,18 @@ comment box."
 
 
 ;;js2-mode enhancement
-(defun xingwenju/js2-which-function ()
+(defun x/js2-which-function ()
   ;; clean the imenu cache
   ;; @see http://stackoverflow.com/questions/13426564/how-to-force-a-rescan-in-imenu-by-a-function
   (setq imenu--index-alist nil)
   (which-function-mode t)
   (which-function))
 
-(defun xingwenju/run-current-file ()
+(defun x/run-current-file ()
   "Execute the current file.
 For example, if the current buffer is the file x.py, then it'll call 「python x.py」 in a shell.
 The file can be emacs lisp, php, perl, python, ruby, javascript, bash, ocaml, Visual Basic.
 File suffix is used to determine what program to run.
-
-If the file is modified, ask if you want to save first.
-
-URL `http://ergoemacs.org/emacs/elisp_run_current_file.html'
 version 2015-08-21"
   (interactive)
   (let* (
@@ -92,12 +88,12 @@ version 2015-08-21"
 
 
 
-(defun my-web-mode-indent-setup ()
+(defun x/gweb-mode-indent-setup ()
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2))
 
-(defun my-toggle-web-indent ()
+(defun x/gtoggle-web-indent ()
   (interactive)
   ;; web development
   (if (eq major-mode 'json-mode)
@@ -117,14 +113,14 @@ version 2015-08-21"
 
   (setq indent-tabs-mode nil))
 
-(defun xingwenju/load-yasnippet ()
+(defun x/gload-yasnippet ()
   (interactive)
   (unless yas-global-mode
     (progn
       (yas-global-mode 1)
-      (setq my-snippet-dir (expand-file-name "~/.spacemacs.d/snippets"))
-      (setq yas-snippet-dirs  my-snippet-dir)
-      (yas-load-directory my-snippet-dir)
+      (setq x/gsnippet-dir (expand-file-name "~/.spacemacs.d/snippets"))
+      (setq yas-snippet-dirs  x/gsnippet-dir)
+      (yas-load-directory x/gsnippet-dir)
       (setq yas-wrap-around-region t)))
   (yas-minor-mode 1))
 
@@ -144,7 +140,7 @@ version 2015-08-21"
     (rename-buffer new-buffer-name t)))
 
 
-(defun my-js2-mode-hook ()
+(defun x/gjs2-mode-hook ()
   (progn
     (define-key js2-mode-map "\C-ci" 'js-doc-insert-function-doc-snippet)
     (define-key js2-mode-map "@" 'js-doc-insert-tag)
@@ -158,7 +154,7 @@ version 2015-08-21"
     (setq forward-sexp-function nil)
     (set (make-local-variable 'semantic-mode) nil)))
 
-(defun my-which-function ()
+(defun x/gwhich-function ()
   ;; clean the imenu cache
   ;; @see http://stackoverflow.com/questions/13426564/how-to-force-a-rescan-in-imenu-by-a-function
   (setq imenu--index-alist nil)
@@ -198,20 +194,20 @@ version 2015-08-21"
                                ("Class" "^[ \t]*cc\.\\(.+\\)[ \t]*=[ \t]*cc\.\\(.+\\)\.extend" 1)
                                ("Task" "[. \t]task([ \t]*['\"]\\([^'\"]+\\)" 1)))))
 
-(defun my-doxymacs-font-lock-hook ()
+(defun x/gdoxymacs-font-lock-hook ()
   (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
       (doxymacs-font-lock)))
 
-(defun my-project-name-contains-substring (REGEX)
+(defun x/gproject-name-contains-substring (REGEX)
   (let ((dir (if (buffer-file-name)
                  (file-name-directory (buffer-file-name))
                "")))
     (string-match-p REGEX dir)))
 
 
-(defvar my-tags-updated-time nil)
+(defvar x/gtags-updated-time nil)
 
-(defun my-create-tags-if-needed (SRC-DIR &optional FORCE)
+(defun x/gcreate-tags-if-needed (SRC-DIR &optional FORCE)
   "return the full path of tags file"
   (let ((dir (file-name-as-directory (file-truename SRC-DIR)))
         file)
@@ -224,38 +220,38 @@ version 2015-08-21"
        (format "ctags -f %s -e -R %s" file dir)))
     file))
 
-(defun my-update-tags ()
+(defun x/gupdate-tags ()
   (interactive)
   "check the tags in tags-table-list and re-create it"
   (dolist (tag tags-table-list)
-    (my-create-tags-if-needed (file-name-directory tag) t)))
+    (x/gcreate-tags-if-needed (file-name-directory tag) t)))
 
 
-(defun my-auto-update-tags-when-save (prefix)
+(defun x/gauto-update-tags-when-save (prefix)
       (interactive "P")
       (cond
-       ((not my-tags-updated-time)
-        (setq my-tags-updated-time (current-time)))
+       ((not x/gtags-updated-time)
+        (setq x/gtags-updated-time (current-time)))
 
        ((and (not prefix)
-             (< (- (float-time (current-time)) (float-time my-tags-updated-time)) 300))
+             (< (- (float-time (current-time)) (float-time x/gtags-updated-time)) 300))
         ;; < 300 seconds
         (message "no need to update the tags")
         )
        (t
-        (setq my-tags-updated-time (current-time))
-        (my-update-tags)
-        (message "updated tags after %d seconds." (- (float-time (current-time)) (float-time my-tags-updated-time))))))
+        (setq x/gtags-updated-time (current-time))
+        (x/gupdate-tags)
+        (message "updated tags after %d seconds." (- (float-time (current-time)) (float-time x/gtags-updated-time))))))
 
 
-(defun my-setup-develop-environment ()
+(defun x/gsetup-develop-environment ()
   (interactive)
-  (when (my-project-name-contains-substring "xingwenju")
+  (when (x/gproject-name-contains-substring "xingwenju")
     (cond
-     ((my-project-name-contains-substring "cocos")
+     ((x/gproject-name-contains-substring "cocos")
       ;; C++ project don't need html tags
-      (setq tags-table-list (list (my-create-tags-if-needed "~/workspace/cocos"))))
-     ((my-project-name-contains-substring "Github/fireball")
+      (setq tags-table-list (list (x/gcreate-tags-if-needed "~/workspace/cocos"))))
+     ((x/gproject-name-contains-substring "Github/fireball")
       (message "load tags for fireball engine repo...")
       ;; html project donot need C++ tags
-      (setq tags-table-list (list (my-create-tags-if-needed "~/git/cocos")))))))
+      (setq tags-table-list (list (x/gcreate-tags-if-needed "~/git/cocos")))))))

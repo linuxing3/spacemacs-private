@@ -2,4 +2,5 @@
  '(
           xingwenju-ui
           xingwenju-writer
+          xingwenju-services
  ))
