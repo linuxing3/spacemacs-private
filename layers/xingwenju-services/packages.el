@@ -34,7 +34,17 @@
     evil ;; vim
     prodigy ;; services
     hydra ;; keys
+    ranger ;; file explorer
     ))
+
+
+(defun xingwenju-services/post-init-ranger ()
+  "Override the default dired"
+  (defun ranger-override-dired ()
+    "Override the default dired"
+    (message "ranger enabled")
+    )
+  )
 
 (defun xingwenju-services/post-init-prodigy ()
   "Prodigy is the service manager"

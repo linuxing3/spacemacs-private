@@ -3,8 +3,8 @@
 ;; It must be stored in your home directory.
 
 ;; Avoiding org errors
-(require 'package)
-(package-initialize)
+;; (require 'package)
+;; (package-initialize)
 
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
@@ -35,6 +35,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     themes-megapack
      markdown
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -46,7 +47,8 @@ values."
      ;; Basic funcitons 
      ;; ----------------------------------------------------------------
      ;; ranger
-     ;; ranger
+     (ranger :variables
+             ranger-show-preview t)
      ;; ibuffer
      (ibuffer :variables
               ibuffer-group-buffers-by 'modes)
@@ -57,7 +59,7 @@ values."
      (colors :variables
              colors-default-rainbow-identifiers-sat 42
              colors-default-rainbow-identifiers-light 86
-             colors-colorize-identifiers 'all)
+             colors-colorize-identifiers 'variables)
      ;; ----------------------------------------------------------------
      ;; auto-completion
      ;; ----------------------------------------------------------------
@@ -181,7 +183,7 @@ values."
    ;; This variable has no effect if Emacs is launched with the parameter
    ;; `--insecure' which forces the value of this variable to nil.
    ;; (default t)
-   dotspacemacs-elpa-https nil
+   dotspacemacs-elpa-https t
    ;; Maximum allowed time in seconds to contact an ELPA repository.
    dotspacemacs-elpa-timeout 10 
    ;; If non nil then spacemacs will check for updates at startup
@@ -401,16 +403,16 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-   (setq configuration-layer--elpa-archives
-         '(
-           ("org"       . "http://orgmode.org/elpa/")
-           ("gnu"       . "http://elpa.gnu.org/packages/")
-           ("melpa"     . "http://melpa.org/packages/")
-           ("milkbox" . "http://melpa.milkbox.net/packages/") 
+  ;;  (setq configuration-layer--elpa-archives
+  ;;        '(
+  ;;         ("org"       . "http://orgmode.org/elpa/")
+  ;;         ("gnu"       . "http://elpa.gnu.org/packages/")
+  ;;         ("melpa"     . "http://melpa.org/packages/")
+  ;;         ("milkbox" . "http://melpa.milkbox.net/packages/") 
   ;;         ("melpa-cn" . "https://elpa.emacs-china.org/melpa/")
   ;;         ("org-cn"   . "https://elpa.emacs-china.org/org/")
   ;;         ("gnu-cn"   . "https://elpa.emacs-china.org/gnu/")
-           ))
+  ;;         ))
 
   ;; https://github.com/syl20bnr/spacemacs/issues/2705
   ;; (setq tramp-mode nil)
@@ -433,6 +435,15 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   ;; company
   (global-company-mode)
+  ;; ranger
+  (setq ranger-cleanup-on-disable t)
+  (setq ranger-cleanup-eagerly t)
+  (setq ranger-header-func 'ranger-header-line)
+  (setq ranger-parent-header-func 'ranger-parent-header-line)
+  (setq ranger-show-literal t)
+  (setq ranger-width-preview 0.55)
+  (setq ranger-ignored-extensions '("mkv" "iso" "mp4"))
+  (setq ranger-max-preview-size 10)
   ;; git
   (setq magit-repository-directories '("~/workspace/"))
   ;; chinese
@@ -464,34 +475,10 @@ you should place your code here."
   (setq org-reveal-root "")
   )
 
-(defun x/load-custom-file-system-type ()
-  "Load custom file according the system type"
-  (interactive)
-  (cond
-   ;; checke the system type
-   ((eq system-type 'darwin)
-    (progn
-      (setq custom-file (expand-file-name "custom.mac.el" dotspacemacs-directory))
-      ))
-   ((eq system-type 'windows-nt)
-    (progn
-      (setq custom-file (expand-file-name "custom.win.el" dotspacemacs-directory))
-      ))
-   ((eq system-type 'gnu/linux)
-    (progn
-      (setq custom-file (expand-file-name "custom.linux.el" dotspacemacs-directory))
-      ))
-   )
+(if (functionp 'x/load-custom-file-system-type)
+    (x/load-custom-file-system-type))
 
-  ;; Load the custom file
-  (if (file-exists-p custom-file)
-      (message (format "%s" custom-file))
-      (load custom-file 'no-error 'no-message)
-  )
- )
-
-;; (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
-
+;; (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory)))
 
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.

@@ -30,21 +30,26 @@
   "Load custom file according the system type"
   (interactive)
   (cond
-       ;; checke the system type
-       ((eq system-type 'darwin)
-         (progn
-           (setq custom-file (expand-file-name "custom.mac.el" user-emacs-directory))
-           (message (format "%s" custom-file))
-           ))
+   ;; checke the system type
+   ((eq system-type 'darwin)
+    (progn
+      (setq custom-file (expand-file-name "custom.mac.el" dotspacemacs-directory))
+      ))
+   ((eq system-type 'windows-nt)
+    (progn
+      (setq custom-file (expand-file-name "custom.win.el" dotspacemacs-directory))
+      ))
+   ((eq system-type 'gnu/linux)
+    (progn
+      (setq custom-file (expand-file-name "custom.linux.el" dotspacemacs-directory))
+      ))
+   )
 
-         ((eq system-type 'windows-nt)
-         (progn
-           (setq custom-file (expand-file-name "custom.win.el" user-emacs-directory))
-           (message (format "%s" custom-file))
-           ))
-          )
+  ;; Load the custom file
   (if (file-exists-p custom-file)
-      (load custom-file))
+      (message (format "%s" custom-file))
+    (load custom-file 'no-error 'no-message)
+    )
   )
 
 (defun org-agenda-show-agenda-and-todo (&optional arg)
