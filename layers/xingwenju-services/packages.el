@@ -65,6 +65,15 @@
           :tags '(work)
           :stop-signal 'sigkill
           :kill-process-buffer-on-stop t)
+
+        (prodigy-define-service
+          :name "Run Dev Server of cp-vuetify"
+          :command "node"
+          :args '(".electron-vue/dev-runner.js")
+          :cwd "~/workspace/cp-vuetify"
+          :tags '(work)
+          :stop-signal 'sigkill
+          :kill-process-buffer-on-stop t)
     )
    )
 

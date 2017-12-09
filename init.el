@@ -35,6 +35,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     markdown
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -44,6 +45,8 @@ values."
      ;; ----------------------------------------------------------------
      ;; Basic funcitons 
      ;; ----------------------------------------------------------------
+     ;; ranger
+     ;; ranger
      ;; ibuffer
      (ibuffer :variables
               ibuffer-group-buffers-by 'modes)
@@ -132,8 +135,8 @@ values."
      ;; ----------------------------------------------------------------
      ;; chinese
      ;; ----------------------------------------------------------------
-     ;; (chinese :variables 
-     ;;          chinese-enable-youdao-dict t)
+     (chinese :variables 
+               chinese-enable-youdao-dict t)
      ;; ----------------------------------------------------------------
      ;; Private
      ;; ----------------------------------------------------------------
@@ -461,8 +464,35 @@ you should place your code here."
   (setq org-reveal-root "")
   )
 
-(setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
-(load custom-file 'no-error 'no-message)
+(defun x/load-custom-file-system-type ()
+  "Load custom file according the system type"
+  (interactive)
+  (cond
+   ;; checke the system type
+   ((eq system-type 'darwin)
+    (progn
+      (setq custom-file (expand-file-name "custom.mac.el" dotspacemacs-directory))
+      ))
+   ((eq system-type 'windows-nt)
+    (progn
+      (setq custom-file (expand-file-name "custom.win.el" dotspacemacs-directory))
+      ))
+   ((eq system-type 'gnu/linux)
+    (progn
+      (setq custom-file (expand-file-name "custom.linux.el" dotspacemacs-directory))
+      ))
+   )
+
+  ;; Load the custom file
+  (if (file-exists-p custom-file)
+      (message (format "%s" custom-file))
+      (load custom-file 'no-error 'no-message)
+  )
+ )
+
+;; (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
+
+
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use

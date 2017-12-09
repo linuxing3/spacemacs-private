@@ -15,5 +15,32 @@
 (setq xingwenju-programming-packages
       '(
         ;; nodejs-repl
+        python
+        exec-path-from-shell
         ))
 
+
+(defun xingwenju-programming/post-init-python ()
+  "Python is a easy and quick language"
+  (progn
+    ;; Add elpy
+    (add-to-list 'package-archives
+                 '("elpy" . "http://jorgenschaefer.github.io/packages/"))
+    )
+    (package-refresh-contents)
+    (package-refresh-contents)
+  ;; ends here
+
+  )
+
+
+(defun xingwenju-programming/post-init-exec-path-from-shell ()
+  "exec path fro env"
+  ;; Add GOPATH to shell
+  (use-package exec-path-from-shell
+    :config
+    (when (memq window-system '(mac ns))
+      (exec-path-from-shell-copy-env "GOPATH")
+      (exec-path-from-shell-copy-env "PYTHONPATH")
+      (exec-path-from-shell-initialize)))
+  )

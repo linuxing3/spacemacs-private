@@ -1,3 +1,52 @@
+;; funcs.el --- xingwenju layer functions configurations.	-*- lexical-binding: t -*-
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;;; Commentary:
+;;             Custom configurations.
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; This program is free software; you can redistribute it and/or
+;; modify it under the terms of the GNU General Public License as
+;; published by the Free Software Foundation; either version 2, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program; see the custom-file COPYING.  If not, write to
+;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+;; Floor, Boston, MA 02110-1301, USA.
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;;; Code:
+
+(defun x/load-custom-file-system-type ()
+  "Load custom file according the system type"
+  (interactive)
+  (cond
+       ;; checke the system type
+       ((eq system-type 'darwin)
+         (progn
+           (setq custom-file (expand-file-name "custom.mac.el" user-emacs-directory))
+           (message (format "%s" custom-file))
+           ))
+
+         ((eq system-type 'windows-nt)
+         (progn
+           (setq custom-file (expand-file-name "custom.win.el" user-emacs-directory))
+           (message (format "%s" custom-file))
+           ))
+          )
+  (if (file-exists-p custom-file)
+      (load custom-file))
+  )
+
 (defun org-agenda-show-agenda-and-todo (&optional arg)
   (interactive "P")
   (org-agenda arg "c")
@@ -128,3 +177,6 @@
 (defun writer-init-file ()
   (interactive)
   (find-file "~/Dropbox/config/emacs/writer/init-main.el"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; funcs.el ends here
