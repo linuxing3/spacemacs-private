@@ -66,13 +66,6 @@
     (setq easy-hugo-previewtime "300"))
   )
 
-(defun xingwenju-writer/init-ox-hugo ()
-  "Start hugo support and load library"
-  (use-package ox-hugo
-    :ensure t 
-    :after ox)
-    ;; (load-library "ox-hugo")
-  )
 
 (defun xingwenju-writer/post-init-org ()
    "Setting org as I want"

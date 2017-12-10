@@ -16,6 +16,7 @@
  ;; if linux
  ((string-equal system-type "gnu/linux")
   (message "linux system")
+  (setq ispell-program-name "aspell")
   (set-face-attribute
    'default nil :font "Source Code Pro 16")
   (add-to-list 'default-frame-alist
