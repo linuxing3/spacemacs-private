@@ -75,7 +75,7 @@ values."
              ranger-show-preview t)
      ;; ibuffer
      (ibuffer :variables
-              ibuffer-group-buffers-by 'modes)
+              ibuffer-group-buffers-by 'projects)
      ;; better defaults
      (better-defaults :variables
                       better-defaults-move-to-beginning-of-code-first t)
