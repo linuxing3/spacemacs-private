@@ -33,9 +33,46 @@
   '(
     org
     org-journal
+    ox-reveal
+    ox-hugo
+    nikola
+    easy-hugo
     )
   )
 
+
+(defun xingwenju-writer/post-init-ox-reveal ()
+  "Automatically load ox reveal library"
+  (progn
+    (use-package ox-reveal
+      :ensure nil
+      :after ox
+      :init
+      (load-library "ox-reveal")
+      )
+    )
+  )
+
+(defun xingwenju-writer/init-easy-hugo ()
+  "Start hugo support and load library"
+  (use-package easy-hugo
+    :ensure t
+    :init
+    (setq easy-hugo-basedir "~/Dropbox/xingwenju.com/hugo/")
+    (setq easy-hugo-url "https://linuxing3.github.io")
+    (setq easy-hugo-sshdomain "mini")
+    (setq easy-hugo-root "/home/blog/")
+    (setq easy-hugo-default-ext ".org")
+    (setq easy-hugo-previewtime "300"))
+  )
+
+(defun xingwenju-writer/init-ox-hugo ()
+  "Start hugo support and load library"
+  (use-package ox-hugo
+    :ensure t 
+    :after ox)
+    ;; (load-library "ox-hugo")
+  )
 
 (defun xingwenju-writer/post-init-org ()
    "Setting org as I want"

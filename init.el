@@ -122,8 +122,13 @@ values."
      ;; ----------------------------------------------------------------
      ;; javascript
      ;; ----------------------------------------------------------------
+     html
      (javascript :variables
                  javascript-disable-tern-port-files nil)
+     ;; ----------------------------------------------------------------
+     ;; rust
+     ;; ----------------------------------------------------------------
+     rust
      ;; ----------------------------------------------------------------
      ;; Python
      ;; ----------------------------------------------------------------
@@ -498,7 +503,7 @@ you should place your code here."
   ;; Set revealjs root
   (setq org-reveal-root "")
   ;; set gnus
-  (load-file (expand-file-name "/elisp/basic/init-gnus.el" dotspacemacs-directory))
+  (load-file (expand-file-name "elisp/basic/init-gnus.el" dotspacemacs-directory))
   )
 
 (if (functionp 'x/load-custom-file-system-type)
