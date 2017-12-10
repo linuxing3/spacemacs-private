@@ -427,4 +427,10 @@
     ))
   )
 
+(defun xingwenju-writer/init-nikola()
+  "Start nikola support and load library"
+  (use-package nikola
+    :ensure t
+  )
+  )
 ;;; packages.el ends here

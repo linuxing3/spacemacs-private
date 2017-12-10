@@ -179,7 +179,8 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
                                       ox-reveal
-                                      youdao-dictionary
+                                      ox-hugo
+                                      ox-nikola
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
