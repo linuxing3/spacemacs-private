@@ -19,10 +19,10 @@
   )
   )
 
-(defun xingwenju-ui/init-neotree ()
+(defun xingwenju-ui/post-init-neotree ()
   "Neotree is the nerdtree copy"
   (progn
-    (use-package neotree :ensure t)
+    (use-package neotree :ensure nil)
     (setq neo-theme 'nerd)
     (setq neo-vc-integration 'face)
     )
