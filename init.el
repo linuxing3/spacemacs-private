@@ -493,9 +493,9 @@ you should place your code here."
   (load-file (expand-file-name "elisp/basic/init-gnus.el" dotspacemacs-directory))
   )
 
+
 (if (functionp 'x/load-custom-file-system-type)
     (x/load-custom-file-system-type))
-
 ;; (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory)))
 
 (defun dotspacemacs/emacs-custom-settings ()
