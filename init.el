@@ -161,11 +161,6 @@ values."
      ;; ----------------------------------------------------------------
      ;; erc
      ;; ----------------------------------------------------------------
-     (erc :variables
-          erc-enable-notifications nil)
-     ;; ----------------------------------------------------------------
-     ;; chinese
-     ;; ----------------------------------------------------------------
      (chinese :variables 
                chinese-enable-youdao-dict t)
      ;; ----------------------------------------------------------------
@@ -466,15 +461,6 @@ you should place your code here."
   ;; company
   (global-company-mode)
   ;; ranger
-  (setq ranger-cleanup-on-disable t)
-  (setq ranger-cleanup-eagerly t)
-  (setq ranger-header-func 'ranger-header-line)
-  (setq ranger-parent-header-func 'ranger-parent-header-line)
-  (setq ranger-show-literal t)
-  (setq ranger-width-preview 0.55)
-  (setq ranger-ignored-extensions '("mkv" "iso" "mp4"))
-  (setq ranger-max-preview-size 10)
-  ;; git
   (setq magit-repository-directories '("~/workspace/"))
   ;; chinese
   (load-file (expand-file-name "elisp/basic/init-chinese.el" dotspacemacs-directory))
@@ -494,8 +480,6 @@ you should place your code here."
   ;; Plain Text title
   (setq spaceline-org-clock-p t)
   ;; neotree theme
-  (setq neo-theme 'nerd)
-  (setq neo-vc-integration 'face)
 
   ;; set javascript
   (setq-default js2-basic-offset 2)
