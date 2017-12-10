@@ -3,8 +3,16 @@
 ;; It must be stored in your home directory.
 
 ;; Avoiding org errors
-;; (require 'package)
-;; (package-initialize)
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (setq package-archives '(
+                           ("org"       . "https://orgmode.org/elpa/")
+                           ("gnu"       . "https://elpa.gnu.org/packages/")
+                           ("melpa"     . "https://melpa.org/packages/")
+                           ("milkbox" . "https://melpa.milkbox.net/packages/") 
+                           ))
+  (package-initialize)
+  )
 
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
@@ -35,16 +43,32 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     themes-megapack
-     markdown
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     themes-megapack
+     (markdown :variables
+               markdown-live-preview-engine 'vmd)
      ivy
      ;; ----------------------------------------------------------------
-     ;; Basic funcitons 
+     ;; ERC Chatting
+     ;; ----------------------------------------------------------------
+     (erc :variables
+          erc-server-list
+          '(("irc.freenode.net"
+             :port "6697"
+             :ssl t
+             :nick "linuxing3"
+             :password "hunter2000")
+            ))
+     ;; ----------------------------------------------------------------
+     ;; Gnus EMail
+     ;; ----------------------------------------------------------------
+     gnus
+     ;; ----------------------------------------------------------------
+     ;; Basic Layers
      ;; ----------------------------------------------------------------
      ;; ranger
      (ranger :variables
@@ -447,7 +471,7 @@ you should place your code here."
   ;; git
   (setq magit-repository-directories '("~/workspace/"))
   ;; chinese
-  (load-file "~/Dropbox/config/emacs/common/chinese.el")
+  (load-file (expand-file-name "elisp/basic/init-chinese.el" dotspacemacs-directory))
   ;; Customize Document
   (setq spacemacs-space-doc-modificators
         '(center-buffer-mode
@@ -473,6 +497,8 @@ you should place your code here."
 
   ;; Set revealjs root
   (setq org-reveal-root "")
+  ;; set gnus
+  (load-file (expand-file-name "/elisp/basic/init-gnus.el" dotspacemacs-directory))
   )
 
 (if (functionp 'x/load-custom-file-system-type)
