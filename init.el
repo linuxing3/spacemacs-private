@@ -434,6 +434,10 @@ you should place your code here."
   (setq magit-repository-directories '("~/workspace/"))
   ;; chinese
   (load-file "~/Dropbox/config/emacs/common/chinese.el")
+  ;;解决org表格里面中英文对齐的问题
+  (when (configuration-layer/layer-usedp 'chinese)
+    (when (and (spacemacs/system-is-mac) window-system)
+      (spacemacs//set-monospaced-font "Source Code Pro" "Hiragino Sans GB" 14 16)))
   ;; Customize Document
   (setq spacemacs-space-doc-modificators
         '(center-buffer-mode
