@@ -2,6 +2,18 @@
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
+;; Avoiding org errors
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (setq package-archives '(
+                           ("org"       . "https://orgmode.org/elpa/")
+                           ("gnu"       . "https://elpa.gnu.org/packages/")
+                           ("melpa"     . "https://melpa.org/packages/")
+                           ("milkbox" . "https://melpa.milkbox.net/packages/") 
+                           ))
+  (package-initialize)
+  )
+
 (defun dotspacemacs/layers ()
   "Layer configuration:
 This function should only modify configuration layer settings."
@@ -37,6 +49,43 @@ This function should only modify configuration layer settings."
      ;; ----------------------------------------------------------------
      ;; helm
      ivy
+     themes-megapack
+     (markdown :variables
+               markdown-live-preview-engine 'vmd)
+     ivy
+     ;; ----------------------------------------------------------------
+     ;; ERC Chatting
+     ;; ----------------------------------------------------------------
+     (erc :variables
+          erc-server-list
+          '(("irc.freenode.net"
+             :port "6697"
+             :ssl t
+             :nick "linuxing3"
+             :password "hunter2000")
+            ))
+     ;; ----------------------------------------------------------------
+     ;; Gnus EMail
+     ;; ----------------------------------------------------------------
+     gnus
+     ;; ----------------------------------------------------------------
+     ;; Basic Layers
+     ;; ----------------------------------------------------------------
+     ;; ranger
+     (ranger :variables
+             ranger-show-preview t)
+     ;; ibuffer
+     (ibuffer :variables
+              ibuffer-group-buffers-by 'projects)
+     ;; better defaults
+     (better-defaults :variables
+                      better-defaults-move-to-beginning-of-code-first t)
+     ;; Colors
+     (colors :variables
+             colors-default-rainbow-identifiers-sat 42
+             colors-default-rainbow-identifiers-light 86
+             colors-colorize-identifiers 'variables)
+     ;; ----------------------------------------------------------------
      ;; auto-completion
      ;; better-defaults
      emacs-lisp
@@ -50,13 +99,72 @@ This function should only modify configuration layer settings."
      ;; spell-checking
      ;; syntax-checking
      ;; version-control
+     ;; ----------------------------------------------------------------
+     (git :variables
+          git-magit-status-fullscreen t
+          magit-push-always-verify nil
+          magit-save-repository-buffers 'dontask
+          magit-revert-buffers 'silent
+          magit-refs-show-commit-count 'all
+          magit-revision-show-gravatars nil)
+     ;; ----------------------------------------------------------------
+     ;; javascript
+     ;; ----------------------------------------------------------------
+     html
+     (javascript :variables
+                 javascript-disable-tern-port-files nil)
+     ;; ----------------------------------------------------------------
+     ;; rust
+     ;; ----------------------------------------------------------------
+     rust
+     ;; ----------------------------------------------------------------
+     ;; Python
+     ;; ----------------------------------------------------------------
+     python
+     ;; ----------------------------------------------------------------
+     ;; Shell
+     ;; ----------------------------------------------------------------
+     (shell :variables
+            shell-default-term-shell "/bin/bash"
+            shell-default-shell 'eshell
+            shell-default-height 30
+            shell-default-position 'bottom)
+     ;; ----------------------------------------------------------------
+     ;; spell
+     ;; ----------------------------------------------------------------
+     spell-checking
+     ;; ----------------------------------------------------------------
+     ;; elfeed
+     ;; ----------------------------------------------------------------
+     (elfeed :variables rmh-elfeed-org-files (list "~/Dropbox/shared/elfeed1.org"
+                                                   "~/Dropbox/shared/elfeed2.org"))
+     ;; ----------------------------------------------------------------
+     ;; Service Manager
+     ;; ----------------------------------------------------------------
+     prodigy
+     ;; ----------------------------------------------------------------
+     ;; notebook
+     ;; ----------------------------------------------------------------
+     ipython-notebook
+     ;; ----------------------------------------------------------------
+     ;; erc
+     ;; ----------------------------------------------------------------
+     (chinese :variables 
+               chinese-enable-youdao-dict t)
+     ;; ----------------------------------------------------------------
+     ;; Private
+     ;; ----------------------------------------------------------------
      xingwenju
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(
+                                      ox-reveal
+                                      ox-hugo
+                                      ox-nikola
+                                      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -359,6 +467,80 @@ before packages are loaded."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+  "Initialization function for user code.
+It is called immediately after `dotspacemacs/init', before layer configuration
+executes.
+ This function is mostly useful for variables that need to be set
+before packages are loaded. If you are unsure, you should try in setting them in
+`dotspacemacs/user-config' first."
+  ;;  (setq configuration-layer--elpa-archives
+  ;;        '(
+  ;;         ("org"       . "http://orgmode.org/elpa/")
+  ;;         ("gnu"       . "http://elpa.gnu.org/packages/")
+  ;;         ("melpa"     . "http://melpa.org/packages/")
+  ;;         ("milkbox" . "http://melpa.milkbox.net/packages/") 
+  ;;         ("melpa-cn" . "https://elpa.emacs-china.org/melpa/")
+  ;;         ("org-cn"   . "https://elpa.emacs-china.org/org/")
+  ;;         ("gnu-cn"   . "https://elpa.emacs-china.org/gnu/")
+  ;;         ))
+
+  ;; https://github.com/syl20bnr/spacemacs/issues/2705
+  ;; (setq tramp-mode nil)
+  (setq tramp-ssh-controlmaster-options
+        "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
+  (setq evil-shift-round nil)
+  (setq byte-compile-warnings '(not obsolete))
+  (setq warning-minimum-level :error)
+  ;; hack for remove purpose mode
+  (setq purpose-mode nil)
+  (setq-default git-magit-status-fullscreen t)
+  )
+
+(defun dotspacemacs/user-config ()
+  "Configuration function for user code.
+This function is called at the very end of Spacemacs initialization after
+layers configuration.
+This is the place where most of your configurations should be done. Unless it is
+explicitly specified that a variable should be set before a package is loaded,
+you should place your code here."
+  ;; company
+  (global-company-mode)
+  ;; ranger
+  (setq magit-repository-directories '("~/workspace/"))
+  ;; chinese
+  (load-file (expand-file-name "elisp/basic/init-chinese.el" dotspacemacs-directory))
+  ;; Customize Document
+  (setq spacemacs-space-doc-modificators
+        '(center-buffer-mode
+          org-indent-mode
+          view-mode
+          hide-line-numbers
+          alternative-emphasis
+          alternative-tags-look
+          link-protocol
+          org-block-line-face-remap
+          org-kbd-face-remap
+          resize-inline-images))
+
+  ;; Plain Text title
+  (setq spaceline-org-clock-p t)
+  ;; neotree theme
+
+  ;; set javascript
+  (setq-default js2-basic-offset 2)
+  (setq-default js-indent-level 2)
+
+  ;; Set revealjs root
+  (setq org-reveal-root "")
+  ;; set gnus
+  (load-file (expand-file-name "elisp/basic/init-gnus.el" dotspacemacs-directory))
+  )
+
+(if (functionp 'x/load-custom-file-system-type)
+    (x/load-custom-file-system-type))
+
+;; (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory)))
+
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use

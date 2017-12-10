@@ -748,3 +748,29 @@ open and unsaved."
   "goto up directory and resue buffer"
   (interactive)
   (find-alternate-file ".."))
+
+
+;; My Nicola blog system
+(defun x/nikola-new ()
+  "Nikola new post with orgmode"
+  (interactive)
+  (shell-command "cd ~/Dropbox/xingwenju.com/blogs; nikola new_post -t Nikola -f orgmode")
+  )
+
+(defun x/nikola-deploy ()
+  "Nikola deploy to Github Page"
+  (interactive)
+  (shell-command "cd ~/Dropbox/xingwenju.com/blogs; nikola github_deploy")
+  )
+
+(defun x/nikola-serve ()
+  "Nikola serve with local server"
+  (interactive)
+  (shell-command "cd ~/Dropbox/xingwenju.com/blogs; nikola serve -p 9999 &")
+  )
+
+(defun x/nikola-build ()
+  "Nikola build new pages"
+  (interactive)
+  (shell-command "cd ~/Dropbox/xingwenju.com/blogs; nikola build &")
+  )

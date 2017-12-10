@@ -43,7 +43,7 @@
           :name "Nikola Blog Local Serve"
           :command "nikola"
           :args '("serve" "-p" "9999")
-          :cwd "~/Dropbox/xingwenju.com/blogs"
+          :cwd "~/Dropbox/xingwenju.com/nikola"
           :tags '(work)
           :stop-signal 'sigkill
           :kill-process-buffer-on-stop t)
@@ -52,7 +52,7 @@
           :name "Nikola Blog Build"
           :command "nikola"
           :args '("build")
-          :cwd "~/Dropbox/xingwenju.com/blogs"
+          :cwd "~/Dropbox/xingwenju.com/nikola"
           :tags '(work)
           :stop-signal 'sigkill
           :kill-process-buffer-on-stop t)
@@ -61,10 +61,38 @@
           :name "Nikola Blog Deploy Github"
           :command "nikola"
           :args '("github_deploy")
-          :cwd "~/Dropbox/xingwenju.com/blogs"
+          :cwd "~/Dropbox/xingwenju.com/nikola"
           :tags '(work)
           :stop-signal 'sigkill
           :kill-process-buffer-on-stop t)
+
+        (prodigy-define-service
+          :name "Run Dev Server of cp-vuetify"
+          :command "node"
+          :args '(".electron-vue/dev-runner.js")
+          :cwd "~/workspace/cp-vuetify"
+          :tags '(work)
+          :stop-signal 'sigkill
+          :kill-process-buffer-on-stop t)
+
+        (prodigy-define-service
+          :name "Run Hogo Site Server"
+          :command "hugo"
+          :args '("server" "--theme=hyde" "--buildDrafts")
+          :cwd "~/Dropbox/xingwenju.com/hugo"
+          :tags '(work)
+          :stop-signal 'sigkill
+          :kill-process-buffer-on-stop t)
+
+        (prodigy-define-service
+          :name "Run Hogo Flying Site Server"
+          :command "hugo"
+          :args '("server" "--theme=after-dark" "--buildDrafts")
+          :cwd "~/Dropbox/xingwenju.com/flying"
+          :tags '(work)
+          :stop-signal 'sigkill
+          :kill-process-buffer-on-stop t)
+
     )
    )
 
