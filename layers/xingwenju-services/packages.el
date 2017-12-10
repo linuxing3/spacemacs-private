@@ -76,7 +76,7 @@
           :kill-process-buffer-on-stop t)
 
         (prodigy-define-service
-          :name "Run Hogo Site Server"
+          :name "Run hyde Hugo Site Server"
           :command "hugo"
           :args '("server" "--theme=hyde" "--buildDrafts")
           :cwd "~/Dropbox/xingwenju.com/hugo"
@@ -85,10 +85,10 @@
           :kill-process-buffer-on-stop t)
 
         (prodigy-define-service
-          :name "Run Hogo Flying Site Server"
+          :name "Run after-dark Hugo Site Server"
           :command "hugo"
           :args '("server" "--theme=after-dark" "--buildDrafts")
-          :cwd "~/Dropbox/xingwenju.com/flying"
+          :cwd "~/Dropbox/xingwenju.com/hugo"
           :tags '(work)
           :stop-signal 'sigkill
           :kill-process-buffer-on-stop t)
