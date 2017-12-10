@@ -6,10 +6,10 @@
 (when (>= emacs-major-version 24)
   (require 'package)
   (setq package-archives '(
-                           ("org"       . "https://orgmode.org/elpa/")
-                           ("gnu"       . "https://elpa.gnu.org/packages/")
-                           ("melpa"     . "https://melpa.org/packages/")
-                           ("milkbox" . "https://melpa.milkbox.net/packages/") 
+                           ("org"       . "http://orgmode.org/elpa/")
+                           ("gnu"       . "http://elpa.gnu.org/packages/")
+                           ("melpa"     . "http://melpa.org/packages/")
+                           ("milkbox" . "http://melpa.milkbox.net/packages/") 
                            ))
   (package-initialize)
   )
@@ -161,8 +161,8 @@ values."
      ;; ----------------------------------------------------------------
      ;; erc
      ;; ----------------------------------------------------------------
-     (chinese :variables 
-               chinese-enable-youdao-dict t)
+     ;; (chinese :variables 
+     ;;           chinese-enable-youdao-dict t)
      ;; ----------------------------------------------------------------
      ;; Private
      ;; ----------------------------------------------------------------
@@ -208,7 +208,7 @@ values."
    ;; This variable has no effect if Emacs is launched with the parameter
    ;; `--insecure' which forces the value of this variable to nil.
    ;; (default t)
-   dotspacemacs-elpa-https t
+   dotspacemacs-elpa-https nil
    ;; Maximum allowed time in seconds to contact an ELPA repository.
    dotspacemacs-elpa-timeout 10 
    ;; If non nil then spacemacs will check for updates at startup
