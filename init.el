@@ -3,8 +3,16 @@
 ;; It must be stored in your home directory.
 
 ;; Avoiding org errors
-(require 'package)
-(package-initialize)
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (setq package-archives '(
+                           ("org"       . "https://orgmode.org/elpa/")
+                           ("gnu"       . "https://elpa.gnu.org/packages/")
+                           ("melpa"     . "https://melpa.org/packages/")
+                           ("milkbox" . "https://melpa.milkbox.net/packages/") 
+                           ))
+  (package-initialize)
+  )
 
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
@@ -40,13 +48,34 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     themes-megapack
+     (markdown :variables
+               markdown-live-preview-engine 'vmd)
      ivy
      ;; ----------------------------------------------------------------
-     ;; Basic funcitons 
+     ;; ERC Chatting
      ;; ----------------------------------------------------------------
+     (erc :variables
+          erc-server-list
+          '(("irc.freenode.net"
+             :port "6697"
+             :ssl t
+             :nick "linuxing3"
+             :password "hunter2000")
+            ))
+     ;; ----------------------------------------------------------------
+     ;; Gnus EMail
+     ;; ----------------------------------------------------------------
+     gnus
+     ;; ----------------------------------------------------------------
+     ;; Basic Layers
+     ;; ----------------------------------------------------------------
+     ;; ranger
+     (ranger :variables
+             ranger-show-preview t)
      ;; ibuffer
      (ibuffer :variables
-              ibuffer-group-buffers-by 'modes)
+              ibuffer-group-buffers-by 'projects)
      ;; better defaults
      (better-defaults :variables
                       better-defaults-move-to-beginning-of-code-first t)
@@ -54,7 +83,7 @@ values."
      (colors :variables
              colors-default-rainbow-identifiers-sat 42
              colors-default-rainbow-identifiers-light 86
-             colors-colorize-identifiers 'all)
+             colors-colorize-identifiers 'variables)
      ;; ----------------------------------------------------------------
      ;; auto-completion
      ;; ----------------------------------------------------------------
@@ -93,8 +122,13 @@ values."
      ;; ----------------------------------------------------------------
      ;; javascript
      ;; ----------------------------------------------------------------
+     html
      (javascript :variables
                  javascript-disable-tern-port-files nil)
+     ;; ----------------------------------------------------------------
+     ;; rust
+     ;; ----------------------------------------------------------------
+     rust
      ;; ----------------------------------------------------------------
      ;; Python
      ;; ----------------------------------------------------------------
@@ -127,13 +161,8 @@ values."
      ;; ----------------------------------------------------------------
      ;; erc
      ;; ----------------------------------------------------------------
-     (erc :variables
-          erc-enable-notifications nil)
-     ;; ----------------------------------------------------------------
-     ;; chinese
-     ;; ----------------------------------------------------------------
-     ;; (chinese :variables 
-     ;;          chinese-enable-youdao-dict t)
+     (chinese :variables 
+               chinese-enable-youdao-dict t)
      ;; ----------------------------------------------------------------
      ;; Private
      ;; ----------------------------------------------------------------
@@ -145,7 +174,8 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
                                       ox-reveal
-                                      youdao-dictionary
+                                      ox-hugo
+                                      ox-nikola
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -178,7 +208,7 @@ values."
    ;; This variable has no effect if Emacs is launched with the parameter
    ;; `--insecure' which forces the value of this variable to nil.
    ;; (default t)
-   dotspacemacs-elpa-https nil
+   dotspacemacs-elpa-https t
    ;; Maximum allowed time in seconds to contact an ELPA repository.
    dotspacemacs-elpa-timeout 10 
    ;; If non nil then spacemacs will check for updates at startup
@@ -398,16 +428,16 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-   (setq configuration-layer--elpa-archives
-         '(
-           ("org"       . "http://orgmode.org/elpa/")
-           ("gnu"       . "http://elpa.gnu.org/packages/")
-           ("melpa"     . "http://melpa.org/packages/")
-           ("milkbox" . "http://melpa.milkbox.net/packages/") 
+  ;;  (setq configuration-layer--elpa-archives
+  ;;        '(
+  ;;         ("org"       . "http://orgmode.org/elpa/")
+  ;;         ("gnu"       . "http://elpa.gnu.org/packages/")
+  ;;         ("melpa"     . "http://melpa.org/packages/")
+  ;;         ("milkbox" . "http://melpa.milkbox.net/packages/") 
   ;;         ("melpa-cn" . "https://elpa.emacs-china.org/melpa/")
   ;;         ("org-cn"   . "https://elpa.emacs-china.org/org/")
   ;;         ("gnu-cn"   . "https://elpa.emacs-china.org/gnu/")
-           ))
+  ;;         ))
 
   ;; https://github.com/syl20bnr/spacemacs/issues/2705
   ;; (setq tramp-mode nil)
@@ -430,14 +460,10 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   ;; company
   (global-company-mode)
-  ;; git
+  ;; ranger
   (setq magit-repository-directories '("~/workspace/"))
   ;; chinese
-  (load-file "~/Dropbox/config/emacs/common/chinese.el")
-  ;;解决org表格里面中英文对齐的问题
-  (when (configuration-layer/layer-usedp 'chinese)
-    (when (and (spacemacs/system-is-mac) window-system)
-      (spacemacs//set-monospaced-font "Source Code Pro" "Hiragino Sans GB" 14 16)))
+  (load-file (expand-file-name "elisp/basic/init-chinese.el" dotspacemacs-directory))
   ;; Customize Document
   (setq spacemacs-space-doc-modificators
         '(center-buffer-mode
@@ -454,8 +480,6 @@ you should place your code here."
   ;; Plain Text title
   (setq spaceline-org-clock-p t)
   ;; neotree theme
-  (setq neo-theme 'nerd)
-  (setq neo-vc-integration 'face)
 
   ;; set javascript
   (setq-default js2-basic-offset 2)
@@ -463,10 +487,15 @@ you should place your code here."
 
   ;; Set revealjs root
   (setq org-reveal-root "")
+  ;; set gnus
+  (load-file (expand-file-name "elisp/basic/init-gnus.el" dotspacemacs-directory))
   )
 
-(setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
-(load custom-file 'no-error 'no-message)
+(if (functionp 'x/load-custom-file-system-type)
+    (x/load-custom-file-system-type))
+
+;; (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory)))
+
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use
