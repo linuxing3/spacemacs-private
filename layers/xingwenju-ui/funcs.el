@@ -106,7 +106,8 @@ directory to make multiple eshell windows easier."
   (setq bookmark-file "~/Dropbox/shared/emacs-bookmarks")
   (bookmark-load bookmark-file)
   )
-(defun set-w3m-command ()
+
+(defun x/set-w3m-command ()
   "Set the w3m-command for different OS"
   (if (string-equal system-type "darwin")
     (setq w3m-command "/usr/local/Cellar/w3m/0.5.3/bin/w3m"))

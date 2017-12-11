@@ -451,6 +451,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; hack for remove purpose mode
   (setq purpose-mode nil)
   (setq-default git-magit-status-fullscreen t)
+  ;; Some customization
+  (if (functionp 'x/load-custom-file-system-type)
+      (x/load-custom-file-system-type))
+  (if (functionp 'x/set-w3m-command)
+      (x/set-w3m-command))
+  ;; (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory)))
   )
 
 (defun dotspacemacs/user-config ()
@@ -487,20 +493,14 @@ you should place your code here."
   (setq-default js2-basic-offset 2)
   (setq-default js-indent-level 2)
 
-  ;; Set revealjs root
-  (setq org-reveal-root "")
   ;; set gnus
   (load-file (expand-file-name "elisp/basic/init-gnus.el" dotspacemacs-directory))
   )
 
-
-(if (functionp 'x/load-custom-file-system-type)
-    (x/load-custom-file-system-type))
-;; (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory)))
 
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
- )
+)

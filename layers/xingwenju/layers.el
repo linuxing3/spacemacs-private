@@ -2,6 +2,7 @@
  '(
           xingwenju-ui
           xingwenju-theming
+          xingwenju-org
           xingwenju-writer
           xingwenju-services
  ))

@@ -11,17 +11,15 @@
 
 (defconst xingwenju-org-packages
   '(
-    ;; (org :ensure org-plus-contrib)
-    ;; org-mac-link
-    ;; org-pomodoro
-    ;; deft
-    ;; (blog-admin :location (recipe
-    ;;                        :fetcher github
-    ;;                        :repo "codefalling/blog-admin"))
-    ;; org-tree-slide
-    ;; ox-reveal
-    ;; worf
-    ;; org-download
-    ;; plain-org-wiki
+    calfw
+    calfw-org
+    )
+  )
+
+(defun xingwenju-org/init-calfw ()
+  ""
+  (progn
+    (use-package calfw :ensure t)
+    (use-package calfw-org :ensure t)
     )
   )

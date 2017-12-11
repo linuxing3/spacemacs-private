@@ -48,6 +48,8 @@
       :after ox
       :init
       (load-library "ox-reveal")
+      :config
+      (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
       )
     )
   )
