@@ -20,6 +20,12 @@
   ""
   (progn
     (use-package calfw :ensure t)
+    )
+  )
+
+(defun xingwenju-org/init-calfw-org ()
+  ""
+  (progn
     (use-package calfw-org :ensure t)
     )
   )

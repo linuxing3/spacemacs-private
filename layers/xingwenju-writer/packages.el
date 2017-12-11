@@ -35,6 +35,7 @@
     org-journal
     ox-reveal
     nikola
+    org-tree-slide
     easy-hugo
     )
   )
@@ -94,8 +95,10 @@
           ;; Here we define the org dir and others
           (setq org-agenda-dir "~/Dropbox/org")
           (setq org-agenda-file-gtd (expand-file-name "gtd.org" org-agenda-dir))
+          (setq org-agenda-file-todo (expand-file-name "todo.org" org-agenda-dir))
           (setq org-agenda-file-note (expand-file-name "notes.org" org-agenda-dir))
-          (setq org-agenda-file-journal (expand-file-name "journal.org" org-agenda-dir))
+          (setq org-agenda-file-links (expand-file-name "links.org" org-agenda-dir))
+          (setq org-agenda-file-datetree (expand-file-name "datetree.org" org-agenda-dir))
           (setq org-agenda-file-code-snippet (expand-file-name "snippet.org" org-agenda-dir))
           (setq org-default-notes-file (expand-file-name "gtd.org" org-agenda-dir))
 
@@ -181,7 +184,7 @@
                                       ;; keybinding for editing source code blocks
                                       ;; keybinding for inserting code blocks
                                       (local-set-key (kbd "C-c i s")
-                                                     'zilongshanren/org-insert-src-block)))
+                                                     'x/simple-org-insert-src-block)))
 
           ;;reset subtask
           (setq org-default-properties (cons "RESET_SUBTASKS" org-default-properties))
@@ -207,6 +210,9 @@
              ;; (ditaa . t)
              ))
 
+          (eval-after-load 'org-src
+            '(define-key org-src-mode-map
+               (kbd "C-x C-s") #'org-edit-src-exit))
 
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ;; Capture templates
@@ -215,43 +221,54 @@
           (setq org-capture-templates
                 '(
               ;; ==================================
-              ("t" "待办Todo" entry (file+headline org-agenda-file-gtd "Inbox")
-               "** TODO [#B] %?\t%^g\n  %i\n"
+              ("t" "待办 @Todo" entry (file org-agenda-file-gtd)
+               "* TODO [#B] %?\t%^g\n  %i\n"
+               :clock-in t
+               :clock-resume t
                :empty-lines 1)
               ;; ==================================
-              ("P" "Project" entry (file+headline org-agenda-file-gtd "Project")
+              ("p" "项目 @ Project" entry (file+headline org-agenda-file-todo "项目 Projects")
                "** TODO [#B] %? [/]\t%^g\n - [ ] Protocolo\n - [ ] Paper\n - [ ] Press \n - [ ] Logistic\n - [ ] Misc\n"
                :empty-lines 1)
               ;; ==================================
-              ("n" "笔记Notes" entry (file+headline org-agenda-file-note "Quick notes")
-               "** %?\t%^g\n  %i\n %U"
-               :empty-lines 1)
-              ;; ==================================
-               ("L" "Bookmark" entry (file+headline org-agenda-file-note "Inbox")
-              "* %? [[%:link][%:description]] \nCaptured On: %U")
-              ("p" "Protocol" entry (file+headline org-agenda-file-note "Inbox")
-              "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
-              ("c" "Chrome" entry (file+headline org-agenda-file-note "Quick notes")
-              "** TODO [#C] %?\n %(xingwenju/retrieve-chrome-current-tab-url)\n %i\n %U"
-              :empty-lines 1)
-              ;; ==================================
-              ("r" "回复Response" entry (file+headline org-agenda-file-gtd "Inbox")
-              "** TODO %?\t%^g\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t)
-              ;; ==================================
-              ("s" "代码片段Code Snippet" entry
+              ("s" "代码片段 @Code Snippet" entry
                (file org-agenda-file-code-snippet)
                "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n#+END_SRC")
               ;; ==================================
-              ("j" "日志Journal"
-               entry (file+olp+datetree org-agenda-file-journal)
+               ("l" "书签 @Bookmark" entry (file org-agenda-file-links)
+              "* %? [[%:link][%:description]] \nCaptured On: %U")
+              ("q" "源 @Source" entry (file org-agenda-file-links)
+              "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?\n%F")
+              ("c" "浏览器 @Chrome" entry (file org-agenda-file-note)
+              "* TODO [#C] %?\n %(xingwenju/retrieve-chrome-current-tab-url)\n %i\n %U"
+              :empty-lines 1)
+              ;; ==================================
+              ("d" "日期树 @ Datetree"
+               entry (file+olp+datetree org-agenda-file-datetree)
                "* %?"
                :empty-lines 1)
               ;; End of Template
+              ("j" "日志 @Journal Note" entry (file (get-journal-file-today))
+               "* %?\n\n  %i\n\n  From: %a" :empty-lines 1)
+              ("t" "加载任务 @Task Entry" entry (file+function org-agenda-file-todo x/load-org-tasks)
+               "* %?\n\n  %i\n\n  From: %a" :empty-lines 1)
+              ("w" "网站 @Website Announcement" entry
+               (file+function org-agenda-file-note x/first-header)
+               "* %?
+              :PROPERTIES:
+              :PUBDATE: %t
+              :END:
+              ,#+HTML: <div class=\"date\">%<%e %b %Y></div>
+
+              %i
+
+              [[%F][Read more...]" :empty-lines 1)
           ))
 
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ;; Agenda custom commands 
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
           (setq org-agenda-custom-commands
                 '(
@@ -273,36 +290,36 @@
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ;; Org publish
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-          (defvar zilongshanren-website-html-preamble
+          (defvar x-website-html-preamble
             "<div class='nav'>
               <ul>
-              <li><a href='http://zilongshanren.com'>博客</a></li>
+              <li><a href='http://xingwenju.com'>博客</a></li>
               <li><a href='/index.html'>Wiki目录</a></li>
               </ul>
               </div>")
 
-          (defvar zilongshanren-website-html-blog-head
+          (defvar x-website-html-blog-head
             " <link rel='stylesheet' href='css/site.css' type='text/css'/> \n
               <link rel=\"stylesheet\" type=\"text/css\" href=\"/css/worg.css\"/>")
 
           (setq org-publish-project-alist
                 `(
                   ("blog-notes"
-                   :base-directory "~/org-notes"
+                   :base-directory "~/Dropbox/org/"
                    :base-extension "org"
-                   :publishing-directory "~/org-notes/public_html/"
+                   :publishing-directory "~/Dropbox/shared/public/"
 
                    :recursive t
-                   :html-head , zilongshanren-website-html-blog-head
+                   :html-head , x-website-html-blog-head
                    :publishing-function org-html-publish-to-html
                    :headline-levels 4       ; Just the default for this project.
                    :auto-preamble t
                    :exclude "gtd.org"
                    :exclude-tags ("ol" "noexport")
                    :section-numbers nil
-                   :html-preamble ,zilongshanren-website-html-preamble
-                   :author "zilongshanren"
-                   :email "guanghui8827@gmail.com"
+                   :html-preamble ,x-website-html-preamble
+                   :author "xingwenju"
+                   :email "xingwenju@gmail.com"
                    :auto-sitemap t          ; Generate sitemap.org automagically...
                    :sitemap-filename "index.org" ; ... call it sitemap.org (it's the default)...
                    :sitemap-title "我的wiki"     ; ... with title 'Sitemap'.
@@ -310,9 +327,9 @@
                    :sitemap-file-entry-format "%t" ; %d to output date, we don't need date here
                    )
                   ("blog-static"
-                   :base-directory "~/org-notes"
+                   :base-directory "~/Dropbox/org/"
                    :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
-                   :publishing-directory "~/org-notes/public_html/"
+                   :publishing-directory "~/Dropbox/shared/public/"
                    :recursive t
                    :publishing-function org-publish-attachment
                    )
@@ -429,3 +446,15 @@
   )
   )
 ;;; packages.el ends here
+
+(defun xinwgenju-writer/init-org-tree-slide ()
+  " A quick way to display an org-mode file is using [[https://github.com/takaxp/org-tree-slide][org-tree-slide]].
+  * org-tree-slide-move-next-tree (C->)
+  * org-tree-slide-move-previous-tree (C-<)
+  * org-tree-slide-content (C-x s c)"
+  (use-package org-tree-slide
+    :ensure t
+    :init
+    (setq org-tree-slide-skip-outline-level 4)
+    (org-tree-slide-simple-profile))
+  )
