@@ -11,8 +11,7 @@
 ;; (global-set-key (kbd "<f4>") 'kmacro-end-or-call-macro
 
 (global-set-key (kbd "<f5>") 'ibuffer)  ;; Using buffer
-;; (global-set-key (kbd "<f6>") 'revert-buffer) ;; Undo some changes
-(global-set-key (kbd "<f6>") 'common-map)
+(global-set-key (kbd "<f6>") 'x-map)
 (global-set-key (kbd "<f7>") 'toggle-frame-fullscreen)
 (global-set-key (kbd "<f8>") 'w3m)  ;; For web browsing
 

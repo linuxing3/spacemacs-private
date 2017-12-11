@@ -22,7 +22,7 @@
 (defun xingwenju-ui/init-neotree ()
   "Neotree is the nerdtree copy"
   (progn
-    (use-package neotro :ensure t)
+    (use-package neotree :ensure t)
     (setq neo-theme 'nerd)
     (setq neo-vc-integration 'face)
     )
