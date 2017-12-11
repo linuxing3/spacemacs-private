@@ -466,10 +466,10 @@ you should place your code here."
   (setq magit-repository-directories '("~/workspace/"))
   ;; chinese
   (load-file (expand-file-name "elisp/basic/init-chinese.el" dotspacemacs-directory))
+  ;; (spacemacs//set-monospaced-font   "Source Code Pro" "Hiragino Sans GB" 14 16)
   ;; Customize Document
   (setq spacemacs-space-doc-modificators
-        '(center-buffer-mode
-          org-indent-mode
+        '(org-indent-mode
           view-mode
           hide-line-numbers
           alternative-emphasis
