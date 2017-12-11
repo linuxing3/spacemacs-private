@@ -44,7 +44,6 @@
       (setq custom-file (expand-file-name "custom.linux.el" dotspacemacs-directory))
       ))
    )
-
   ;; Load the custom file
   (if (file-exists-p custom-file)
       (message (format "%s" custom-file))

@@ -72,11 +72,44 @@
 
 (defun xingwenju-writer/post-init-org ()
    "Setting org as I want"
+    ;; More
     (with-eval-after-load 'org
         (progn
 
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-          ;; file structure
+          ;; Basic bindings
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+         (use-package org
+           :config
+           ;;;start;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+           (bind-keys :map org-mode-map
+                      ("A-b" . (surround-text-with "+"))
+                      ("s-b" . (surround-text-with "*"))
+                      ("A-i" . (surround-text-with "/"))
+                      ("s-i" . (surround-text-with "/"))
+                      ("A-=" . (surround-text-with "="))
+                      ("s-=" . (surround-text-with "="))
+                      ("A-`" . (surround-text-with "~"))
+                      ("s-`" . (surround-text-with "~"))
+                      ("C-s-f" . forward-sentence)
+                      ("C-s-b" . backward-sentence))
+           (font-lock-add-keywords            ; A bit silly but my headers are now
+            'org-mode `(("^\\*+ \\(TODO\\) "  ; shorter, and that is nice canceled
+                         (1 (progn (compose-region (match-beginning 1) (match-end 1) "⚑")
+                                   nil)))
+                        ("^\\*+ \\(DOING\\) "
+                         (1 (progn (compose-region (match-beginning 1) (match-end 1) "⚐")
+                                   nil)))
+                        ("^\\*+ \\(CANCELED\\) "
+                         (1 (progn (compose-region (match-beginning 1) (match-end 1) "✘")
+                                   nil)))
+                        ("^\\*+ \\(DONE\\) "
+                         (1 (progn (compose-region (match-beginning 1) (match-end 1) "✔")
+                                   nil)))))
+           ;;;end;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+           )
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+         ;; file structure
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           (if (boundp 'org-user-agenda-files)
               (setq org-agenda-files org-user-agenda-files)

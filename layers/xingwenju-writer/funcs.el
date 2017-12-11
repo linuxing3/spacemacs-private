@@ -63,6 +63,48 @@
     (insert "\n\n  $0\n") ; Start with a blank separating line
     ))
 
+(defun journal-last-year-file ()
+      "Returns the string corresponding to the journal entry that
+    happened 'last year' at this same time (meaning on the same day
+    of the week)."
+    (let* ((last-year-seconds (- (float-time) (* 365 24 60 60)))
+           (last-year (seconds-to-time last-year-seconds))
+           (last-year-dow (nth 6 (decode-time last-year)))
+           (this-year-dow (nth 6 (decode-time)))
+           (difference (if (> this-year-dow last-year-dow)
+                           (- this-year-dow last-year-dow)
+                         (- last-year-dow this-year-dow)))
+           (target-date-seconds (+ last-year-seconds (* difference 24 60 60)))
+           (target-date (seconds-to-time target-date-seconds)))
+      (format-time-string "%Y%m%d" target-date)))
+
+(defun x/journal-last-year ()
+      "Loads last year's journal entry, which is not necessary the
+    same day of the month, but will be the same day of the week."
+      (interactive)
+      (let ((journal-file (concat org-journal-dir (journal-last-year-file))))
+        (find-file journal-file)))
+
+(defun meeting-notes ()
+  "Call this after creating an org-mode heading for where the notes for the meeting
+     should be. After calling this function, call 'meeting-done' to reset the environment."
+  (interactive)
+  (outline-mark-subtree)                              ;; Select org-mode section
+  (narrow-to-region (region-beginning) (region-end))  ;; Only show that region
+  (deactivate-mark)
+  (delete-other-windows)                              ;; Get rid of other windows
+  (text-scale-set 2)                                  ;; Text is now readable by others
+  (fringe-mode 0)
+  (message "When finished taking your notes, run meeting-done."))
+
+(defun meeting-done ()
+  "Attempt to 'undo' the effects of taking meeting notes."
+  (interactive)
+  (widen)                                       ;; Opposite of narrow-to-region
+  (text-scale-set 0)                            ;; Reset the font size increase
+  (fringe-mode 1)
+  (winner-undo))                                ;; Put the windows back in place
+
 (defun x/prepare-meeting-notes ()
   "Prepare meeting notes for email
    Take selected region and convert tabs to spaces, mark TODOs with leading >>>, and copy to kill ring for pasting"
@@ -276,3 +318,56 @@
 (defun x/save-org-tasks ()
   (save-buffer)
   (shell-command (format "/usr/local/bin/michel-orgmode --push --orgfile %s" org-default-tasks-file)))
+
+(defun org-text-bold () "Wraps the region with asterisks."
+       (interactive)
+       (surround-text "*"))
+(defun org-text-italics () "Wraps the region with slashes."
+       (interactive)
+       (surround-text "/"))
+(defun org-text-code () "Wraps the region with equal signs."
+       (interactive)
+       (surround-text "="))
+
+(defun x/org-return (&optional ignore)
+  "Add new list item, heading or table row with RET.
+A double return on an empty element deletes it.
+Use a prefix arg to get regular RET. "
+  (interactive "P")
+  (if ignore
+      (org-return)
+    (cond
+     ;; Open links like usual
+     ((eq 'link (car (org-element-context)))
+      (org-return))
+     ;; lists end with two blank lines, so we need to make sure we are also not
+     ;; at the beginning of a line to avoid a loop where a new entry gets
+     ;; created with only one blank line.
+     ((and (org-in-item-p) (not (bolp)))
+      (if (org-element-property :contents-begin (org-element-context))
+          (org-insert-heading)
+        (beginning-of-line)
+        (setf (buffer-substring
+               (line-beginning-position) (line-end-position)) "")
+        (org-return)))
+     ((org-at-heading-p)
+      (if (not (string= "" (org-element-property :title (org-element-context))))
+          (progn (org-end-of-meta-data)
+                 (org-insert-heading))
+        (beginning-of-line)
+        (setf (buffer-substring
+               (line-beginning-position) (line-end-position)) "")))
+     ((org-at-table-p)
+      (if (-any?
+           (lambda (x) (not (string= "" x)))
+           (nth
+            (- (org-table-current-dline) 1)
+            (org-table-to-lisp)))
+          (org-return)
+        ;; empty row
+        (beginning-of-line)
+        (setf (buffer-substring
+               (line-beginning-position) (line-end-position)) "")
+        (org-return)))
+     (t
+      (org-return)))))
