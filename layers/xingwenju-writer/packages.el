@@ -272,8 +272,8 @@
               "* %? [[%:link][%:description]] \nCaptured On: %U")
               ("q" "源 @Source" entry (file org-agenda-file-links)
               "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?\n%F")
-              ("c" "浏览器 @Chrome" entry (file org-agenda-file-note)
-              "* TODO [#C] %?\n %(xingwenju/retrieve-chrome-current-tab-url)\n %i\n %U"
+              ("c" "浏览器 @Chrome" entry (file org-agenda-file-links)
+              "* TODO [#C] %?\n %(x/retrieve-chrome-current-tab-url)\n %i\n %U"
               :empty-lines 1)
               ;; ==================================
               ("d" "日期树 @ Datetree"
@@ -480,7 +480,7 @@
   )
 ;;; packages.el ends here
 
-(defun xinwgenju-writer/init-org-tree-slide ()
+(defun xingwenju-writer/init-org-tree-slide ()
   " A quick way to display an org-mode file is using [[https://github.com/takaxp/org-tree-slide][org-tree-slide]].
   * org-tree-slide-move-next-tree (C->)
   * org-tree-slide-move-previous-tree (C-<)
