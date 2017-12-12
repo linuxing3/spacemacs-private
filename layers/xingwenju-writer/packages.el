@@ -61,7 +61,7 @@
     :ensure t
     :init
     (setq easy-hugo-basedir "~/Dropbox/xingwenju.com/hugo/")
-    (setq easy-hugo-postdir "content/posts")
+    (setq easy-hugo-postdir "content/feeds")
     (setq easy-hugo-url "https://linuxing3.github.io")
     (setq easy-hugo-sshdomain "mini")
     (setq easy-hugo-root "/home/blog/")
