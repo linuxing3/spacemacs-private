@@ -2,6 +2,7 @@
   '(
     ranger
     neotree
+    ibuffer
     )
   )
 
@@ -19,11 +20,49 @@
   )
   )
 
-(defun xingwenju-ui/init-neotree ()
+(defun xingwenju-ui/post-init-neotree ()
   "Neotree is the nerdtree copy"
   (progn
-    (use-package neotree :ensure t)
+    (use-package neotree :ensure nil)
     (setq neo-theme 'nerd)
     (setq neo-vc-integration 'face)
     )
   )
+
+(defun xingwenju-ui/post-init-ibuffer ()
+  ""
+  (setq ibuffer-show-empty-filter-groups nil)
+  )
+
+(defun xingwenju-ui/pre-init-ibuffer ()
+  (with-eval-after-load 'ibuffer
+    (require 'projectile)
+    (setq ibuffer-saved-filter-groups
+          (list (cons "Default"
+                      (append
+                       (mapcar (lambda (it)
+                                 (let ((name (file-name-nondirectory
+                                              (directory-file-name it))))
+                                   `(,name (filename . ,(expand-file-name it)))))
+                               projectile-known-projects)
+                       `(("Org" (mode . org-mode))
+                         ("Dired" (mode . dired-mode))
+                         ("IRC" (mode . erc-mode))
+                         ("Python" (mode . python-mode))
+                         ("Emacs" (or (name . "\\*Messages\\*")
+                                      (name . "\\*Compile-Log\\*")
+                                      (name . "\\*scratch\\*")
+                                      (name . "\\*spacemacs\\*")
+                                      (name . "\\*emacs\\*")))
+                         ("Gtd" (or (name . "gtd.org")
+                                      (name . "todo.org")
+                                      (name . "daniel")
+                                      (name . "wanglulu")))
+                         ("Magit" (name . "\\*magit"))
+                         ("Help" (name . "\\*Help\\*"))
+                         ("Helm" (name . "\\*helm"))
+                         )))))
+    (add-hook 'buffer-mode-hook
+              (defun bb-ibuffer/switch-ibuffer-group ()
+                (ibuffer-switch-to-saved-filter-groups "Default")))
+    (add-hook 'ibuffer-mode-hook 'ibuffer-auto-mode)))

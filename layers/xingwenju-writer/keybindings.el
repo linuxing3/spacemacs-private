@@ -19,3 +19,5 @@
 (define-key org-map (kbd "t") 'org-todo) ;; todo
 (define-key org-map (kbd "n") 'org-add-note) ;; add note
 (define-key org-map (kbd "b") 'org-brain) ;; add brain
+;; org mode map
+(define-key org-mode-map (kbd "RET")  #'x/org-return)
