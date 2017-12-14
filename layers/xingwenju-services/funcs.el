@@ -774,3 +774,10 @@ open and unsaved."
   (interactive)
   (shell-command "cd ~/Dropbox/xingwenju.com/blogs; nikola build &")
   )
+
+(defun x/crawl-eluniversal-goscript ()
+  "Crawl the news"
+  (interactive)
+    (shell-command "cd ~/go/src/github.com/gocolly/colly/_examples; go run eluniversal/eluniversal.go >> ~/results.json")
+    (find-file "~/results.json")
+    )

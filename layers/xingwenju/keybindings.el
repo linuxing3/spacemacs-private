@@ -7,8 +7,8 @@
 ;; Global functions keys
 ;; (global-set-key (kbd "<f1>") 'view-order-manuals)
 (define-key global-map (kbd "<f2>") 'menu-bar-open)
-;; (global-set-key (kbd "<f3>") 'kmacro-start-macro-or-insert-counter)
-;; (global-set-key (kbd "<f4>") 'kmacro-end-or-call-macro
+(global-set-key (kbd "<f3>") 'zoom-frm-in)
+(global-set-key (kbd "<f4>") 'zoom-frm-out)
 
 (global-set-key (kbd "<f5>") 'ibuffer)  ;; Using buffer
 (global-set-key (kbd "<f6>") 'x-map)
