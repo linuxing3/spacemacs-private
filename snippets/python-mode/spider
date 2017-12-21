@@ -6,12 +6,12 @@
 
 # -*- coding: utf-8 -*-
 import scrapy
-from SpiderFolder.items import ItemDefinition
+from ${0:SpiderFolder}.items import ${1:ItemDefinition}
 
-class SpiderFolder(scrapy.Spider):
-    name = "spidername"
+class $0(scrapy.Spider):
+    name = "$2"
     allowed_domains = ["domain.com"]
-    start_urls = ['url/']
+    start_urls = ['$3']
 
 
     def parse(self, response):
@@ -19,15 +19,15 @@ class SpiderFolder(scrapy.Spider):
             open the blog page
         """
         for article in response.css('article.article'):
-            blog_url = article.css(
+            article_url = article.css(
                  'div.txt > h3.title > a::attr(href)').extract_first()
-            yield scrapy.Request(response.urljoin(blog_url), callback=self.parse_article)
+            yield scrapy.Request(response.urljoin(article_url), callback=self.parse_article)
 
     def parse_article(self, response):
         """
             parse the article detail page
         """
-        item = ItemDefinition()
+        item = $1()
 
         item['title'] = response.css('h2.title ::text').extract_first()
 
