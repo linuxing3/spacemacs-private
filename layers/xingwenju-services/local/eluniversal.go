@@ -6,6 +6,7 @@ import (
 	"log"
 	"strings"
 
+	"github.com/PuerkitoBio/goquery"
 	"github.com/gocolly/colly"
 )
 
@@ -60,8 +61,13 @@ func main() {
 			Title: title,
 			URL:   e.Request.URL.String(),
 		}
+		log.Println("findings text")
 		// Iterate over rows of the table which contains different information
 		// about the course
+		e.DOM.Find("div").Each(func(_ int, s *goquery.Selection) {
+			log.Println("p found")
+			// news.text = s.Find("p").Text()
+		})
 
 		allNews = append(allNews, news)
 	})

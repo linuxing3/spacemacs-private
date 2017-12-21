@@ -462,9 +462,11 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (if (functionp 'x/load-custom-file-system-type)
       (x/load-custom-file-system-type))
   (if (functionp 'x/set-w3m-command)
-      (x/set-w3m-command))
-  ;; (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory)))
-  )
+      (x/set-w3m-command)))
+(if (functionp 'x/set-bookmark-file)
+    (x/set-bookmark-file))
+;; (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory)))
+
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
