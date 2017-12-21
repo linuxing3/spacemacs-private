@@ -1,0 +1,43 @@
+# -*- mode: snippet -*-
+# name: spider
+# key: spider
+# --
+
+
+# -*- coding: utf-8 -*-
+import scrapy
+from SpiderFolder.items import ItemDefinition
+
+class SpiderFolder(scrapy.Spider):
+    name = "spidername"
+    allowed_domains = ["domain.com"]
+    start_urls = ['url/']
+
+
+    def parse(self, response):
+        """
+            open the blog page
+        """
+        for article in response.css('article.article'):
+            blog_url = article.css(
+                 'div.txt > h3.title > a::attr(href)').extract_first()
+            yield scrapy.Request(response.urljoin(blog_url), callback=self.parse_article)
+
+    def parse_article(self, response):
+        """
+            parse the article detail page
+        """
+        item = ItemDefinition()
+
+        item['title'] = response.css('h2.title ::text').extract_first()
+
+        item['url'] = response.url
+
+        item['file_urls'] = [response.url]
+
+        full_texts = ""
+        for text in response.css('.note-text > p::text').extract():
+            full_texts += text
+        item['texts'] = full_texts.strip()
+
+        yield item
