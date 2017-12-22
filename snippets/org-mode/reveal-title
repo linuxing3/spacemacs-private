@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: reveal title
+# key: rt
+# --
+
+#+TITLE: $0
+#+AUTHOR: xing wenju
+#+OPTIONS: reveal_slide_number:nil num:nil 
+#+REVEAL_SLIDE_HEADER: 
+#+REVEAL_TITLE_SLIDE_BACKGROUND: ./images/background.jpg
+#+REVEAL_TITLE_SLIDE_SIZE: 1024px 
+#+REVEAL_TITLE_SLIDE_BACKGROUND_REPEAT: repeat
+#+REVEAL_THEME: white
+#+REVEAL_EXTRA_CSS: ./css/official.css

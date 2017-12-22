@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: reveal background
+# key: rb
+# --
+:PROPERTIES:
+:reveal_background: ./images/background.jpg
+:reveal_background_size: 1024x
+:END:
