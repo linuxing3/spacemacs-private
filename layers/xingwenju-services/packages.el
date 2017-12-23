@@ -39,17 +39,8 @@
 (defun xingwenju-services/post-init-prodigy ()
   "Prodigy is the service manager"
     (progn
-        (prodigy-define-tag
-          :name conda-env-root
-          :env '(("PYTHONHOME" (format "~/.virtualenvs/%s/" envname))
-                 ("PYTHONPATH" (format "~/projects/%s/" envname))
-                 ("VIRTUAL_ENV" (format "~/.virtualenvs/%s/" envname)))
-          )
-        (prodigy-define-tag
-          :name work
-          :ready-message "Work service is running..."
-          )
         (prodigy-define-service
+
           :name "Information Center: El Universal"
           :command "scrapy"
           :args '("crawl" "eluniversal")
@@ -57,6 +48,7 @@
           :tags '(work)
           :stop-signal 'sigkill
           :kill-process-buffer-on-stop t)
+
         (prodigy-define-service
           :name "Nikola Blog Local Serve"
           :command "nikola"

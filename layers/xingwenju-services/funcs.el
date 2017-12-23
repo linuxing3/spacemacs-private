@@ -781,3 +781,13 @@ open and unsaved."
     (shell-command "cd ~/go/src/github.com/gocolly/colly/_examples; go run eluniversal/eluniversal.go >> ~/results.json")
     (find-file "~/results.json")
     )
+
+(defun x/insert-eluniversal-news ()
+  "Crawl the news"
+  (interactive)
+  (message "First run prodigy: Information Center: El Universal")
+  (insert-file "~/Dropbox/shared/InformationCenter/results.txt")
+  (org-mode)
+  (mark-whole-buffer)
+  (fill-paragraph)
+  )
