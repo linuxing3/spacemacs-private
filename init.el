@@ -43,6 +43,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     typescript
      go
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -134,6 +135,7 @@ values."
      ;; Python
      ;; ----------------------------------------------------------------
      python
+     ipython-notebook
      ;; ----------------------------------------------------------------
      ;; Shell
      ;; ----------------------------------------------------------------

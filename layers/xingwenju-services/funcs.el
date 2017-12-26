@@ -782,12 +782,22 @@ open and unsaved."
     (find-file "~/results.json")
     )
 
-(defun x/insert-eluniversal-news ()
-  "Crawl the news"
+(defun x/scrapy-venezuela-news ()
+  "Crawl the news about Venezuela from some popular newspapers"
   (interactive)
-  (message "First run prodigy: Information Center: El Universal")
-  (insert-file "~/Dropbox/shared/InformationCenter/results.txt")
-  (org-mode)
+  (shell-command "cd ~/Dropbox/shared/InformationCenter && scrapy crawl eluniversal")
+  (shell-command "cd ~/Dropbox/shared/InformationCenter && scrapy crawl elnacional")
+  (shell-command "cd ~/Dropbox/shared/InformationCenter && scrapy crawl correodelorinoco")
+  (shell-command "cd ~/Dropbox/shared/InformationCenter && scrapy crawl ultimanoticias")
+  )
+
+(defun x/insert-venezuela-news ()
+  "Crawl the news about Venezuela from some popular newspapers"
+  (interactive)
+  (insert-file "~/Dropbox/shared/InformationCenter/eluniversal_results.txt")
+  (insert-file "~/Dropbox/shared/InformationCenter/elnacional_results.txt")
+  (insert-file "~/Dropbox/shared/InformationCenter/correodelorinoco_results.txt")
+  (insert-file "~/Dropbox/shared/InformationCenter/ultimanoticias_results.txt")
   (mark-whole-buffer)
   (fill-paragraph)
   )
