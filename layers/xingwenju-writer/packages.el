@@ -309,10 +309,11 @@
                   ("w1" "工作" tags-todo "work"
                    ((org-agenda-sorting-strategy '(todo-state-down priority-down)))
                    )
-                  ("w2" "家庭" tags-todo "home")
+                  ("w2" "办公室" tags-todo "@office")
                   ("w3" "自己" tags-todo "self")
                   ("w4" "孩子" tags-todo "daniel")
                   ("w5" "妻子" tags-todo "lulu")
+                  ("w6" "家庭" tags-todo "home")
                   ("W" "回顾"
                    (
                     (tags "PROJECT"
