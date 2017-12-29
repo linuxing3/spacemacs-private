@@ -441,7 +441,7 @@
                                       ("@errand" . ?e)
                                       ("@office" . ?o)
                                       ("@home" . ?H)
-                                      ("@farm" . ?f)
+                                      ("@travel" . ?f)
                                       (:endgroup)
                                       ("WAITING" . ?w)
                                       ("HOLD" . ?h)
