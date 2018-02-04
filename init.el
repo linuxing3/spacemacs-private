@@ -176,6 +176,7 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
+                                      vue-mode
                                       ox-reveal
                                       ox-hugo
                                       ox-nikola
@@ -503,6 +504,7 @@ you should place your code here."
   ;; set javascript
   (setq-default js2-basic-offset 2)
   (setq-default js-indent-level 2)
+  (setq tags-table-list (list "~/workspace/cp-work-puppeteer/src/TAGS"))
 
   ;; set gnus
   (load-file (expand-file-name "elisp/basic/init-gnus.el" dotspacemacs-directory))

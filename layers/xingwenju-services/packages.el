@@ -40,7 +40,6 @@
   "Prodigy is the service manager"
     (progn
         (prodigy-define-service
-
           :name "Information Center: El Universal"
           :command "scrapy"
           :args '("crawl" "eluniversal")
@@ -48,6 +47,9 @@
           :tags '(work)
           :stop-signal 'sigkill
           :kill-process-buffer-on-stop t)
+
+        (prodigy-define-service
+          :name "----------华丽的分割线---------------")
 
         (prodigy-define-service
           :name "Nikola Blog Local Serve"
@@ -77,6 +79,10 @@
           :kill-process-buffer-on-stop t)
 
         (prodigy-define-service
+          :name "----------华丽的分割线---------------"
+          :command "")
+
+        (prodigy-define-service
           :name "Run Dev Server of cp-vuetify"
           :command "node"
           :args '(".electron-vue/dev-runner.js")
@@ -84,6 +90,9 @@
           :tags '(work)
           :stop-signal 'sigkill
           :kill-process-buffer-on-stop t)
+
+        (prodigy-define-service
+          :name "----------华丽的分割线---------------")
 
         (prodigy-define-service
           :name "Run hyde Hugo Site Server"
@@ -103,15 +112,16 @@
           :stop-signal 'sigkill
           :kill-process-buffer-on-stop t)
 
+        (prodigy-define-service
+          :name "----------华丽的分割线---------------")
+
     )
    )
 
 (defun xingwenju-services/post-init-hydra ()
   (progn
     (defhydra hydra-hotspots (:color blue)
-      "Hotspots"
-      ("b" blog-admin-start "blog")
-      ("g" helm-github-stars "helm github stars")
+      "Javascript"
       ("r" x/run-current-file "run current file"))
 
     (defhydra multiple-cursors-hydra (:hint nil)
