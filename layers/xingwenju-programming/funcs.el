@@ -649,9 +649,9 @@ open and unsaved."
 org-files and bookmarks"
   (interactive)
   (helm :buffer "*helm: utities*"
-        :sources `(,(x//hotspots-sources))))
+        :sources `(,(x/hotspots-sources))))
 
-(defun x//hotspots-sources ()
+(defun x/hotspots-sources ()
   "Construct the helm sources for my hotspots"
   `((name . "Mail and News")
     (candidates . (("Calendar" . (lambda ()  (browse-url "https://www.google.com/calendar/render")))
