@@ -135,7 +135,6 @@ values."
      ;; Python
      ;; ----------------------------------------------------------------
      python
-     ipython-notebook
      ;; ----------------------------------------------------------------
      ;; Shell
      ;; ----------------------------------------------------------------
@@ -162,10 +161,11 @@ values."
      ;; ----------------------------------------------------------------
      ipython-notebook
      ;; ----------------------------------------------------------------
-     ;; erc
+     ;; chinese
      ;; ----------------------------------------------------------------
      (chinese :variables
                chinese-enable-youdao-dict t)
+     search-engine
      ;; ----------------------------------------------------------------
      ;; Private
      ;; ----------------------------------------------------------------
@@ -518,6 +518,12 @@ you should place your code here."
 
   ;; set gnus
   (load-file (expand-file-name "elisp/basic/init-gnus.el" dotspacemacs-directory))
+  ;; Search engine
+  (setq browse-url-browser-function 'browse-url-generic
+        engine/browser-function 'browse-url-generic
+        browse-url-generic-program "google-chrome")
+
+  ;; End of user-config
   )
 
 

@@ -28,7 +28,6 @@
                  '("elpy" . "http://jorgenschaefer.github.io/packages/"))
     )
     (package-refresh-contents)
-    (package-refresh-contents)
   ;; ends here
 
   )

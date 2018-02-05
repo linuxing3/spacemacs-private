@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : named function
+# --
+const ${1:name} = function($2) {
+  $0
+}
