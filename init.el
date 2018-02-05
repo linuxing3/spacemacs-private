@@ -478,13 +478,22 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+
+  ;; Disable .zshrc warning
+  (setq exec-path-from-shell-check-startup-files nil)
+
   ;; company
   (global-company-mode)
+  (golden-ratio-mode 1)
+
   ;; ranger
   (setq magit-repository-directories '("~/workspace/"))
+
   ;; chinese
   (load-file (expand-file-name "elisp/basic/init-chinese.el" dotspacemacs-directory))
+
   ;; (spacemacs//set-monospaced-font   "Source Code Pro" "Hiragino Sans GB" 14 16)
+
   ;; Customize Document
   (setq spacemacs-space-doc-modificators
         '(org-indent-mode
@@ -499,6 +508,7 @@ you should place your code here."
 
   ;; Plain Text title
   (setq spaceline-org-clock-p t)
+
   ;; neotree theme
 
   ;; set javascript
