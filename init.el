@@ -42,7 +42,7 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(go
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -503,4 +503,85 @@ you should place your code here."
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol nil)
+ '(package-selected-packages
+   (quote
+    (helm-gtags godoctor go-rename go-guru go-eldoc ggtags flycheck-gometalinter flycheck exec-path-from-shell company-go go-mode zenburn-theme zen-and-art-theme youdao-dictionary yapfify ws-butler winum white-sand-theme which-key wgrep web-mode web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme toml-mode toc-org tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit symon sunny-day-theme sublime-themes subatomic256-theme subatomic-theme string-inflection spaceline spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smex smeargle slim-mode shell-pop seti-theme scss-mode sass-mode reverse-theme restart-emacs rebecca-theme ranger rainbow-mode rainbow-identifiers rainbow-delimiters railscasts-theme racer pyvenv pytest pyim pyenv-mode py-isort purple-haze-theme pug-mode professional-theme prodigy planet-theme pip-requirements phoenix-dark-pink-theme phoenix-dark-mono-theme persp-mode pcre2el password-generator paradox ox-nikola ox-hugo ox-gfm orgit organic-green-theme org-projectile org-present org-pomodoro org-journal org-download org-bullets org-brain open-junk-file omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme nikola neotree naquadah-theme mwim mustang-theme multi-term move-text monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minimal-theme material-theme markdown-toc majapahit-theme magit-gitflow madhat2r-theme macrostep lush-theme lorem-ipsum livid-mode live-py-mode linum-relative link-hint light-soap-theme less-css-mode json-mode js2-refactor js-doc jbeans-theme jazz-theme ivy-purpose ivy-hydra ir-black-theme inkpot-theme info+ indent-guide impatient-mode ibuffer-projectile hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt heroku-theme hemisu-theme help-fns+ helm-make hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme google-translate golden-ratio gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md gandalf-theme fuzzy flyspell-correct-ivy flx-ido flatui-theme flatland-theme find-by-pinyin-dired fill-column-indicator farmhouse-theme fancy-battery eyebrowse expand-region exotica-theme evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu espresso-theme eshell-z eshell-prompt-extras esh-help erc-yt erc-view-log erc-social-graph erc-image erc-hl-nicks emmet-mode elisp-slime-nav elfeed-web elfeed-org elfeed-goodies ein editorconfig easy-hugo dumb-jump dracula-theme django-theme diminish define-word darktooth-theme darkokai-theme darkmine-theme darkburn-theme dakrone-theme cython-mode cyberpunk-theme counsel-projectile company-web company-tern company-statistics company-anaconda column-enforce-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized color-identifiers-mode coffee-mode clues-theme clean-aindent-mode cherry-blossom-theme cargo calfw-org calfw busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes aggressive-indent afternoon-theme adaptive-wrap ace-window ace-link ac-ispell))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(font-latex-sectioning-0-face ((t (:inherit default :height 1.0 :weight bold))))
+ '(font-latex-sectioning-1-face ((t (:inherit default :height 1.0 :weight bold))))
+ '(font-latex-sectioning-2-face ((t (:inherit default :height 1.0 :weight bold))))
+ '(font-latex-sectioning-3-face ((t (:inherit default :height 1.0 :weight bold))))
+ '(font-latex-sectioning-4-face ((t (:inherit default :height 1.0 :weight bold))))
+ '(font-latex-sectioning-5-face ((t (:inherit default :height 1.0 :weight bold))))
+ '(font-latex-slide-title-face ((t (:inherit default :height 1.0 :weight bold))))
+ '(info-title-1 ((t (:inherit default :height 1.0 :weight bold))))
+ '(info-title-2 ((t (:inherit default :height 1.0 :weight bold))))
+ '(info-title-3 ((t (:inherit default :height 1.0 :weight bold))))
+ '(info-title-4 ((t (:inherit default :height 1.0 :weight bold))))
+ '(markdown-header-face ((t (:inherit default :height 1.0 :weight bold))))
+ '(markdown-header-face-1 ((t (:inherit default :height 1.0 :weight bold))))
+ '(markdown-header-face-2 ((t (:inherit default :height 1.0 :weight bold))))
+ '(markdown-header-face-3 ((t (:inherit default :height 1.0 :weight bold))))
+ '(markdown-header-face-4 ((t (:inherit default :height 1.0 :weight bold))))
+ '(markdown-header-face-5 ((t (:inherit default :height 1.0 :weight bold))))
+ '(markdown-header-face-6 ((t (:inherit default :height 1.0 :weight bold))))
+ '(org-document-title ((t (:inherit default :height 1.0 :weight bold))))
+ '(org-level-1 ((t (:inherit default :height 1.0 :weight bold))))
+ '(org-level-2 ((t (:inherit default :height 1.0 :weight bold))))
+ '(org-level-3 ((t (:inherit default :height 1.0 :weight bold))))
+ '(org-level-4 ((t (:inherit default :height 1.0 :weight bold))))
+ '(org-level-5 ((t (:inherit default :height 1.0 :weight bold))))
+ '(org-level-6 ((t (:inherit default :height 1.0 :weight bold))))
+ '(org-level-7 ((t (:inherit default :height 1.0 :weight bold))))
+ '(org-level-8 ((t (:inherit default :height 1.0 :weight bold)))))
 )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (ox-gfm find-by-pinyin-dired elfeed-web elfeed-org elfeed-goodies ace-jump-mode noflet ein request-deferred websocket zenburn-theme zen-and-art-theme youdao-dictionary names chinese-word-at-point yapfify wgrep web-mode vmd-mode unfill underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme toml-mode tao-theme tangotango-theme tango-plus-theme tango-2-theme tagedit sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smex slim-mode seti-theme scss-mode sass-mode reverse-theme ranger rainbow-mode rainbow-identifiers railscasts-theme racer pyvenv pytest pyenv-mode py-isort purple-haze-theme pug-mode professional-theme prodigy planet-theme pip-requirements phoenix-dark-pink-theme phoenix-dark-mono-theme ox-nikola ox-rst ox-hugo organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme nikola naquadah-theme mwim mustang-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme live-py-mode light-soap-theme less-css-mode jbeans-theme jazz-theme ivy-hydra ir-black-theme inkpot-theme ibuffer-projectile hy-mode heroku-theme hemisu-theme hc-zenburn-theme haml-mode gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme go-guru go-eldoc gandalf-theme flyspell-correct-ivy flatui-theme flatland-theme pinyinlib farmhouse-theme espresso-theme erc-yt erc-view-log erc-social-graph erc-image erc-hl-nicks emmet-mode elfeed deferred easy-hugo dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cython-mode cyberpunk-theme counsel-projectile company-web web-completion-data company-go go-mode company-anaconda color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized color-identifiers-mode clues-theme cherry-blossom-theme cargo rust-mode calfw-org calfw busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme anaconda-mode pythonic ample-zen-theme ample-theme alect-themes afternoon-theme xterm-color ws-butler winum which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline smeargle shell-pop restart-emacs rainbow-delimiters popwin persp-mode pcre2el paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file nodejs-repl neotree multi-term move-text monokai-theme mmm-mode markdown-toc magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode linum-relative link-hint json-mode js2-refactor js-doc info+ indent-guide hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gmail-message-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh-md fuzzy flyspell-correct-helm flymd flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav edit-server dumb-jump define-word csv-mode counsel company-tern company-statistics column-enforce-mode coffee-mode clean-aindent-mode bracketed-paste auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(font-latex-sectioning-0-face ((t (:inherit default :height 1.0 :weight bold))))
+ '(font-latex-sectioning-1-face ((t (:inherit default :height 1.0 :weight bold))))
+ '(font-latex-sectioning-2-face ((t (:inherit default :height 1.0 :weight bold))))
+ '(font-latex-sectioning-3-face ((t (:inherit default :height 1.0 :weight bold))))
+ '(font-latex-sectioning-4-face ((t (:inherit default :height 1.0 :weight bold))))
+ '(font-latex-sectioning-5-face ((t (:inherit default :height 1.0 :weight bold))))
+ '(font-latex-slide-title-face ((t (:inherit default :height 1.0 :weight bold))))
+ '(info-title-1 ((t (:inherit default :height 1.0 :weight bold))))
+ '(info-title-2 ((t (:inherit default :height 1.0 :weight bold))))
+ '(info-title-3 ((t (:inherit default :height 1.0 :weight bold))))
+ '(info-title-4 ((t (:inherit default :height 1.0 :weight bold))))
+ '(markdown-header-face ((t (:inherit default :height 1.0 :weight bold))))
+ '(markdown-header-face-1 ((t (:inherit default :height 1.0 :weight bold))))
+ '(markdown-header-face-2 ((t (:inherit default :height 1.0 :weight bold))))
+ '(markdown-header-face-3 ((t (:inherit default :height 1.0 :weight bold))))
+ '(markdown-header-face-4 ((t (:inherit default :height 1.0 :weight bold))))
+ '(markdown-header-face-5 ((t (:inherit default :height 1.0 :weight bold))))
+ '(markdown-header-face-6 ((t (:inherit default :height 1.0 :weight bold))))
+ '(org-document-title ((t (:inherit default :height 1.0 :weight bold))))
+ '(org-level-1 ((t (:inherit default :height 1.0 :weight bold))))
+ '(org-level-2 ((t (:inherit default :height 1.0 :weight bold))))
+ '(org-level-3 ((t (:inherit default :height 1.0 :weight bold))))
+ '(org-level-4 ((t (:inherit default :height 1.0 :weight bold))))
+ '(org-level-5 ((t (:inherit default :height 1.0 :weight bold))))
+ '(org-level-6 ((t (:inherit default :height 1.0 :weight bold))))
+ '(org-level-7 ((t (:inherit default :height 1.0 :weight bold))))
+ '(org-level-8 ((t (:inherit default :height 1.0 :weight bold)))))
