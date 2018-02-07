@@ -5,4 +5,5 @@
           xingwenju-org
           xingwenju-writer
           xingwenju-services
+          xingwenju-programming
  ))

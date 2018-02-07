@@ -61,7 +61,7 @@
     :ensure t
     :init
     (setq easy-hugo-basedir "~/Dropbox/xingwenju.com/hugo/")
-    (setq easy-hugo-postdir "content/posts")
+    (setq easy-hugo-postdir "content/feeds")
     (setq easy-hugo-url "https://linuxing3.github.io")
     (setq easy-hugo-sshdomain "mini")
     (setq easy-hugo-root "/home/blog/")
@@ -272,8 +272,8 @@
               "* %? [[%:link][%:description]] \nCaptured On: %U")
               ("q" "源 @Source" entry (file org-agenda-file-links)
               "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?\n%F")
-              ("c" "浏览器 @Chrome" entry (file org-agenda-file-note)
-              "* TODO [#C] %?\n %(xingwenju/retrieve-chrome-current-tab-url)\n %i\n %U"
+              ("c" "浏览器 @Chrome" entry (file org-agenda-file-links)
+              "* TODO [#C] %?\n %(x/retrieve-chrome-current-tab-url)\n %i\n %U"
               :empty-lines 1)
               ;; ==================================
               ("d" "日期树 @ Datetree"
@@ -309,10 +309,11 @@
                   ("w1" "工作" tags-todo "work"
                    ((org-agenda-sorting-strategy '(todo-state-down priority-down)))
                    )
-                  ("w2" "家庭" tags-todo "home")
+                  ("w2" "办公室" tags-todo "@office")
                   ("w3" "自己" tags-todo "self")
                   ("w4" "孩子" tags-todo "daniel")
                   ("w5" "妻子" tags-todo "lulu")
+                  ("w6" "家庭" tags-todo "home")
                   ("W" "回顾"
                    (
                     (tags "PROJECT"
@@ -440,7 +441,7 @@
                                       ("@errand" . ?e)
                                       ("@office" . ?o)
                                       ("@home" . ?H)
-                                      ("@farm" . ?f)
+                                      ("@travel" . ?f)
                                       (:endgroup)
                                       ("WAITING" . ?w)
                                       ("HOLD" . ?h)
@@ -480,7 +481,7 @@
   )
 ;;; packages.el ends here
 
-(defun xinwgenju-writer/init-org-tree-slide ()
+(defun xingwenju-writer/init-org-tree-slide ()
   " A quick way to display an org-mode file is using [[https://github.com/takaxp/org-tree-slide][org-tree-slide]].
   * org-tree-slide-move-next-tree (C->)
   * org-tree-slide-move-previous-tree (C-<)

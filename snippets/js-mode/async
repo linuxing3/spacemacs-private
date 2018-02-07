@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : async function
+# --
+const ${1:name} = async function($2) {
+  $0
+}

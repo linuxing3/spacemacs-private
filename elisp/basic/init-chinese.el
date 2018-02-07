@@ -25,8 +25,8 @@
  ((string-equal system-type "darwin")
   (message "Mac os system")
   (set-face-attribute
-   'default nil :font "Source Code Pro 16")
+   'default nil :font "Fira Code 16")
   (add-to-list 'default-frame-alist
-               '(font . "Source Code Pro-16"))
+               '(font . "Fira Code-16"))
   )
  )

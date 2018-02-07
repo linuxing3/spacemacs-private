@@ -51,7 +51,7 @@
   (interactive)
   (find-file (get-journal-file-yesterday)))
 
-(defun x/journal-file-insert ()
+(defun x/journal-title-insert ()
   "Insert's the journal heading based on the file's name."
   (interactive)
   (let* ((year  (string-to-number (substring (buffer-name) 0 4)))
@@ -59,8 +59,14 @@
          (day   (string-to-number (substring (buffer-name) 6 8)))
          (datim (encode-time 0 0 0 day month year)))
 
+    (insert "#+TITLE: Journal Entry - ")
     (insert (format-time-string org-journal-date-format datim))
-    (insert "\n\n  $0\n") ; Start with a blank separating line
+    (insert "\n")
+    (insert "#+AUTHOR: xing wenju\n")
+    (insert "#+IRC: linuxing3 on freenode\n")
+    (insert "#+EMAIL: xingwenju@gmail.com\n")
+    (insert "#+STARTUP: overview\n")
+    (insert "\n\n")
     ))
 
 (defun journal-last-year-file ()

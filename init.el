@@ -3,16 +3,20 @@
 ;; It must be stored in your home directory.
 
 ;; Avoiding org errors
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (setq package-archives '(
-                           ("org"       . "http://orgmode.org/elpa/")
-                           ("gnu"       . "http://elpa.gnu.org/packages/")
-                           ("melpa"     . "http://melpa.org/packages/")
-                           ("milkbox" . "http://melpa.milkbox.net/packages/")
-                           ))
-  (package-initialize)
+(defun x/refresh-packages ()
+  (when (>= emacs-major-version 24)
+    (require 'package)
+    (setq package-archives '(
+                             ("org"       . "http://orgmode.org/elpa/")
+                             ("gnu"       . "http://elpa.gnu.org/packages/")
+                             ("melpa"     . "http://melpa.org/packages/")
+                             ("milkbox" . "http://melpa.milkbox.net/packages/")
+                             ))
+    (package-initialize)
+    )
   )
+
+(x/refresh-packages)
 
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
@@ -42,7 +46,9 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(go
+   '(
+     typescript
+     go
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -159,10 +165,11 @@ values."
      ;; ----------------------------------------------------------------
      ipython-notebook
      ;; ----------------------------------------------------------------
-     ;; erc
+     ;; chinese
      ;; ----------------------------------------------------------------
      (chinese :variables
                chinese-enable-youdao-dict t)
+     search-engine
      ;; ----------------------------------------------------------------
      ;; Private
      ;; ----------------------------------------------------------------
@@ -173,6 +180,7 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
+                                      vue-mode
                                       ox-reveal
                                       ox-hugo
                                       ox-nikola
@@ -184,6 +192,12 @@ values."
                                     xterm-color
                                     ace-pinyin
                                     pangu-spacing
+                                    chinese-pyim
+                                    firebelly-theme
+                                    niflheim-theme
+                                    pastels-on-dark-theme
+                                    tronesque-theme
+                                    zonokai-theme
                                     )
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
@@ -262,7 +276,7 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
+   dotspacemacs-default-font '("Fira Code"
                                :size 14
                                :weight normal
                                :width normal
@@ -456,8 +470,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
       (x/load-custom-file-system-type))
   (if (functionp 'x/set-w3m-command)
       (x/set-w3m-command))
-  ;; (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory)))
-  )
+  (if (functionp 'x/set-bookmark-file)
+    (x/set-bookmark-file)))
+;; (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory)))
+
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -466,13 +482,22 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+
+  ;; Disable .zshrc warning
+  (setq exec-path-from-shell-check-startup-files nil)
+
   ;; company
   (global-company-mode)
+  (golden-ratio-mode 1)
+
   ;; ranger
   (setq magit-repository-directories '("~/workspace/"))
+
   ;; chinese
   (load-file (expand-file-name "elisp/basic/init-chinese.el" dotspacemacs-directory))
+
   ;; (spacemacs//set-monospaced-font   "Source Code Pro" "Hiragino Sans GB" 14 16)
+
   ;; Customize Document
   (setq spacemacs-space-doc-modificators
         '(org-indent-mode
@@ -487,14 +512,22 @@ you should place your code here."
 
   ;; Plain Text title
   (setq spaceline-org-clock-p t)
+
   ;; neotree theme
 
   ;; set javascript
   (setq-default js2-basic-offset 2)
   (setq-default js-indent-level 2)
+  (setq tags-table-list (list "~/workspace/cp-work-puppeteer/src/TAGS"))
 
   ;; set gnus
   (load-file (expand-file-name "elisp/basic/init-gnus.el" dotspacemacs-directory))
+  ;; Search engine
+  (setq browse-url-browser-function 'browse-url-generic
+        engine/browser-function 'browse-url-generic
+        browse-url-generic-program "google-chrome")
+
+  ;; End of user-config
   )
 
 
