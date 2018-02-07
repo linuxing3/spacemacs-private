@@ -3,16 +3,20 @@
 ;; It must be stored in your home directory.
 
 ;; Avoiding org errors
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (setq package-archives '(
-                           ("org"       . "http://orgmode.org/elpa/")
-                           ("gnu"       . "http://elpa.gnu.org/packages/")
-                           ("melpa"     . "http://melpa.org/packages/")
-                           ("milkbox" . "http://melpa.milkbox.net/packages/")
-                           ))
-  (package-initialize)
+(defun x/refresh-packages ()
+  (when (>= emacs-major-version 24)
+    (require 'package)
+    (setq package-archives '(
+                             ("org"       . "http://orgmode.org/elpa/")
+                             ("gnu"       . "http://elpa.gnu.org/packages/")
+                             ("melpa"     . "http://melpa.org/packages/")
+                             ("milkbox" . "http://melpa.milkbox.net/packages/")
+                             ))
+    (package-initialize)
+    )
   )
+
+(x/refresh-packages)
 
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
@@ -272,7 +276,7 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
+   dotspacemacs-default-font '("Fira Code"
                                :size 14
                                :weight normal
                                :width normal
