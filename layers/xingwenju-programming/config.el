@@ -9,3 +9,5 @@
 ;;
 ;;; License: GPLv3
 
+
+(spacemacs|defvar-company-backends python-mode)

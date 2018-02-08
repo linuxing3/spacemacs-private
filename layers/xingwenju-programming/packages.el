@@ -16,6 +16,8 @@
       '(
         ;; nodejs-repl
         python
+        company ;; add auto-completion in a layer
+        (company-anaconda :toggle (configuration-layer/package-usedp 'company))
         exec-path-from-shell
         ))
 
@@ -25,13 +27,20 @@
   (progn
     ;; Add elpy
     (add-to-list 'package-archives
-                 '("elpy" . "http://jorgenschaefer.github.io/packages/"))
-    )
-    (package-refresh-contents)
+                 '("elpy" . "http://jorgenschaefer.github.io/packages/")))
+    ;;(package-refresh-contents)
   ;; ends here
-
   )
 
+;; Hook company to python-mode
+(defun xingwenju-programming/post-init-company ()
+  (spacemacs|add-company-hook python-mode))
+
+;; Add the backend to the major-mode specific backend list
+(defun xingwenju-programming/init-company-anaconda ()
+  (use-package company-anaconda
+    :defer t
+    :init (push 'company-anaconda company-backends-python-mode)))
 
 (defun xingwenju-programming/post-init-exec-path-from-shell ()
   "exec path fro env"
