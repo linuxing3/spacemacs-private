@@ -1,4 +1,5 @@
 (when (window-system)
+  (setq ispell-program-name "aspell")
   (set-default-font "Fira Code"))
 (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
                (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")

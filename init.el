@@ -504,6 +504,7 @@ you should place your code here."
   (setq magit-repository-directories '("~/workspace/"))
 
   ;; chinese
+  (setq ispell-program-name "aspell")
   (load-file (expand-file-name "elisp/basic/init-chinese.fira.el" dotspacemacs-directory))
 
   ;; (spacemacs//set-monospaced-font   "Source Code Pro" "Hiragino Sans GB" 14 16)
