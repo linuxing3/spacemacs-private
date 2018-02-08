@@ -16,7 +16,7 @@
     )
   )
 
-(x/refresh-packages)
+;; (x/refresh-packages)
 
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
@@ -484,7 +484,7 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
   ;; Disable .zshrc warning
-  (setq exec-path-from-shell-check-startup-files nil)
+  (setq-default exec-path-from-shell-check-startup-files nil)
 
   ;; company
   (global-company-mode)
@@ -522,6 +522,7 @@ you should place your code here."
 
   ;; set gnus
   (load-file (expand-file-name "elisp/basic/init-gnus.el" dotspacemacs-directory))
+  
   ;; Search engine
   (setq browse-url-browser-function 'browse-url-generic
         engine/browser-function 'browse-url-generic
