@@ -47,6 +47,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     dash
      typescript
      go
      ;; ----------------------------------------------------------------
@@ -94,6 +95,7 @@ values."
      ;; auto-completion
      ;; ----------------------------------------------------------------
      (auto-completion :variables
+                      ;; spacemacs-default-company-backends '()
                       auto-completion-enable-sort-by-usage t
                       auto-completion-enable-snippets-in-popup t
                       colors-enable-nyan-cat-progress-bar (display-graphic-p)
@@ -106,6 +108,7 @@ values."
      ;; Programming languages
      ;; ----------------------------------------------------------------
      emacs-lisp
+     semantic
      ;; plantuml
      ;; ----------------------------------------------------------------
      ;; org
@@ -138,7 +141,7 @@ values."
      ;; ----------------------------------------------------------------
      ;; Python
      ;; ----------------------------------------------------------------
-     python
+     (python :variables python-enable-yapf-format-on-save t)
      ;; ----------------------------------------------------------------
      ;; Shell
      ;; ----------------------------------------------------------------
@@ -459,20 +462,26 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; (setq tramp-mode nil)
   (setq tramp-ssh-controlmaster-options
         "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
+
   (setq evil-shift-round nil)
+
   (setq byte-compile-warnings '(not obsolete))
+
   (setq warning-minimum-level :error)
+
   ;; hack for remove purpose mode
   (setq purpose-mode nil)
+
   (setq-default git-magit-status-fullscreen t)
+
   ;; Some customization
+  ;; (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
   (if (functionp 'x/load-custom-file-system-type)
       (x/load-custom-file-system-type))
   (if (functionp 'x/set-w3m-command)
       (x/set-w3m-command))
   (if (functionp 'x/set-bookmark-file)
     (x/set-bookmark-file)))
-;; (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory)))
 
 
 (defun dotspacemacs/user-config ()
@@ -522,11 +531,10 @@ you should place your code here."
 
   ;; set gnus
   (load-file (expand-file-name "elisp/basic/init-gnus.el" dotspacemacs-directory))
-  
+
   ;; Search engine
   (setq browse-url-browser-function 'browse-url-generic
-        engine/browser-function 'browse-url-generic
-        browse-url-generic-program "google-chrome")
+        engine/browser-function 'browse-url-generic)
 
   ;; End of user-config
   )
