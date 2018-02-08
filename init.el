@@ -1,4 +1,4 @@
-﻿;; -*- mode: emacs-lisp -*-
+;; -*- mode: emacs-lisp -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
@@ -16,7 +16,7 @@
     )
   )
 
-(x/refresh-packages)
+;; (x/refresh-packages)
 
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
@@ -180,7 +180,6 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
-                                      vue-mode
                                       ox-reveal
                                       ox-hugo
                                       ox-nikola
@@ -189,6 +188,8 @@ values."
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages '(
+                                    tide
+                                    vue-mode
                                     xterm-color
                                     ace-pinyin
                                     pangu-spacing
@@ -270,14 +271,14 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
-                         spacemacs-light)
+   dotspacemacs-themes '(spacemacs-light
+                         spacemacs-dark)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Fira Code"
-                               :size 14
+                               :size 16
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -494,7 +495,7 @@ you should place your code here."
   (setq magit-repository-directories '("~/workspace/"))
 
   ;; chinese
-  (load-file (expand-file-name "elisp/basic/init-chinese.el" dotspacemacs-directory))
+  (load-file (expand-file-name "elisp/basic/init-chinese.fira.el" dotspacemacs-directory))
 
   ;; (spacemacs//set-monospaced-font   "Source Code Pro" "Hiragino Sans GB" 14 16)
 

@@ -30,6 +30,8 @@
 
 					; major modes
 (defalias 'hm 'html-mode)
+(defalias 'css 'css-mode)
+(defalias 'web 'web-mode)
 (defalias 'tm 'text-mode)
 (defalias 'elm 'emacs-lisp-mode)
 (defalias 'om 'org-mode)
