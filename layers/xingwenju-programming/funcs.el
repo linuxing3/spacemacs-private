@@ -9,6 +9,11 @@
 ;;
 ;;; License: GPLv3
 
+(defun x/gwhich-function ()
+  ;; clean the imenu cache
+  ;; @see http://stackoverflow.com/questions/13426564/how-to-force-a-rescan-in-imenu-by-a-function
+  (setq imenu--index-alist nil)
+  (which-function))
 
 ;; http://blog.binchen.org/posts/use-ivy-mode-to-search-bash-history.html
 ;; ;FIXME: make it work with zsh
@@ -719,13 +724,6 @@ comment box."
         (overlay-put overlay 'before-string (propertize "A"
                                                         'display '(left-fringe right-triangle)))))))
 
-;;js2-mode enhancement
-(defun x/js2-which-function ()
-  ;; clean the imenu cache
-  ;; @see http://stackoverflow.com/questions/13426564/how-to-force-a-rescan-in-imenu-by-a-function
-  (setq imenu--index-alist nil)
-  (which-function-mode t)
-  (which-function))
 
 (defun x/run-current-file ()
   "Execute the current file.
@@ -821,6 +819,13 @@ version 2015-08-21"
     (setq new-buffer-name (concat "cmake-" parent-dir))
     (rename-buffer new-buffer-name t)))
 
+;;js2-mode enhancement
+(defun x/js2-which-function ()
+  ;; clean the imenu cache
+  ;; @see http://stackoverflow.com/questions/13426564/how-to-force-a-rescan-in-imenu-by-a-function
+  (setq imenu--index-alist nil)
+  (which-function-mode t)
+  (which-function))
 
 (defun x/js2-mode-hook ()
   (progn
@@ -836,11 +841,6 @@ version 2015-08-21"
     (setq forward-sexp-function nil)
     (set (make-local-variable 'semantic-mode) nil)))
 
-(defun x/gwhich-function ()
-  ;; clean the imenu cache
-  ;; @see http://stackoverflow.com/questions/13426564/how-to-force-a-rescan-in-imenu-by-a-function
-  (setq imenu--index-alist nil)
-  (which-function))
 
 (defun x/js2-imenu-make-index ()
   (interactive)

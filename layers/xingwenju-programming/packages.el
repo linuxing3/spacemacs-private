@@ -16,15 +16,21 @@
       '(
         ;; nodejs-repl
         python
+        javascript
         company ;; add auto-completion in a layer
         (company-anaconda :toggle (configuration-layer/package-usedp 'company))
         exec-path-from-shell
         ))
 
+(defun xingwenju-programming/post-init-javascript ()
+  "Setting js-mode"
+  (progn (add-hook js2-mode-hook x/js2-mode-hook)))
 
 (defun xingwenju-programming/post-init-python ()
   "Python is a easy and quick language"
   (progn
+    (setq python-indent-offset 4)
+    (setq python-enable-yapf-format-on-save t)
     ;; Add elpy
     (add-to-list 'package-archives
                  '("elpy" . "http://jorgenschaefer.github.io/packages/")))
@@ -37,7 +43,7 @@
   (spacemacs|add-company-hook python-mode))
 
 ;; Add the backend to the major-mode specific backend list
-(defun xingwenju-programming/init-company-anaconda ()
+(defun xingwenju-programming/post-init-company-anaconda ()
   (use-package company-anaconda
     :defer t
     :init (push 'company-anaconda company-backends-python-mode)))

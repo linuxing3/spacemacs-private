@@ -42,6 +42,7 @@
 (defalias 'gwsm 'global-whitespace-mode)
 (defalias 'vlm 'visual-line-mode)
 (defalias 'glm 'global-linum-mode)
+(defalias 'gcm 'global-company-mode)
 
 ;; files
 (defalias 'inbox 'gtd)
@@ -49,7 +50,6 @@
 (defalias 'daniel 'kid)
 
 ;; define constants
-
 (defconst sys/win32p
   (eq system-type 'windows-nt)
   "Are we running on a WinTel system?")

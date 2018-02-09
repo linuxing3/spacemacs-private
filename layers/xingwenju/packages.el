@@ -1,3 +1,2 @@
 (defconst xingwenju-packages
-  '()
-  )
+  '())
