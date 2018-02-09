@@ -827,21 +827,6 @@ version 2015-08-21"
   (which-function-mode t)
   (which-function))
 
-(defun x/js2-mode-hook ()
-  (progn
-    (define-key js2-mode-map "\C-ci" 'js-doc-insert-function-doc-snippet)
-    (define-key js2-mode-map "@" 'js-doc-insert-tag)
-    (modify-syntax-entry ?_ "w")
-    (which-function-mode t)
-    (setq imenu-create-index-function 'js2-imenu-make-index)
-
-    (setq mode-name "JS2")
-    (define-key js2-mode-map   (kbd "s-.") 'company-tern)
-    (spacemacs/toggle-syntax-checking-on)
-    (setq forward-sexp-function nil)
-    (set (make-local-variable 'semantic-mode) nil)))
-
-
 (defun x/js2-imenu-make-index ()
   (interactive)
   (save-excursion
@@ -876,6 +861,23 @@ version 2015-08-21"
                                ("Class" "^[ \t]*cc\.\\(.+\\)[ \t]*=[ \t]*cc\.\\(.+\\)\.extend" 1)
                                ("Task" "[. \t]task([ \t]*['\"]\\([^'\"]+\\)" 1)))))
 
+(defun x/js2-mode-hook ()
+  (progn
+    (define-key js2-mode-map "\C-ci" 'js-doc-insert-function-doc-snippet)
+    (define-key js2-mode-map "@" 'js-doc-insert-tag)
+    (global-set-key (kbd "M-s i") 'x/counsel-imenu)
+    (modify-syntax-entry ?_ "w")
+    (which-function-mode t)
+    (setq imenu-create-index-function 'x/js2-imenu-make-index)
+
+    (setq mode-name "JS2")
+    (define-key js2-mode-map   (kbd "s-.") 'company-tern)
+    (spacemacs/toggle-syntax-checking-on)
+    (setq forward-sexp-function nil)
+    (set (make-local-variable 'semantic-mode) nil)))
+
+
+;; File exploring
 (defun x/doxymacs-font-lock-hook ()
   (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
       (doxymacs-font-lock)))

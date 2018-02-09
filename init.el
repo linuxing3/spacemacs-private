@@ -543,10 +543,6 @@ you should place your code here."
   ;; neotree theme
 
   ;; set javascript
-  (setq-default js2-basic-offset 2)
-  (setq-default js-indent-level 2)
-  (setq tags-table-list (list "~/workspace/cp-work-puppeteer/src/TAGS"))
-
   ;; set gnus
   (load-file (expand-file-name "elisp/basic/init-gnus.el" dotspacemacs-directory))
 

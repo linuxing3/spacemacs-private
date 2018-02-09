@@ -17,14 +17,18 @@
         ;; nodejs-repl
         python
         javascript
-        company ;; add auto-completion in a layer
-        (company-anaconda :toggle (configuration-layer/package-usedp 'company))
+        ;; company ;; add auto-completion in a layer
+        ;; (company-anaconda :toggle (configuration-layer/package-usedp 'company))
         exec-path-from-shell
         ))
 
 (defun xingwenju-programming/post-init-javascript ()
   "Setting js-mode"
-  (progn (add-hook js2-mode-hook x/js2-mode-hook)))
+  (progn
+    (setq-default js2-basic-offset 2)
+    (setq-default js-indent-level 2)
+    (setq tags-table-list (list "~/workspace/cp-work-puppeteer/src/TAGS"))
+    (add-hook js2-mode-hook x/js2-mode-hook)))
 
 (defun xingwenju-programming/post-init-python ()
   "Python is a easy and quick language"
@@ -39,14 +43,14 @@
   )
 
 ;; Hook company to python-mode
-(defun xingwenju-programming/post-init-company ()
-  (spacemacs|add-company-hook python-mode))
+;; (defun xingwenju-programming/post-init-company ()
+;;   (spacemacs|add-company-hook python-mode))
 
 ;; Add the backend to the major-mode specific backend list
-(defun xingwenju-programming/post-init-company-anaconda ()
-  (use-package company-anaconda
-    :defer t
-    :init (push 'company-anaconda company-backends-python-mode)))
+;; (defun xingwenju-programming/init-company-anaconda ()
+;;   (use-package company-anaconda
+;;     :defer t
+;;     :init (push 'company-anaconda company-backends-python-mode)))
 
 (defun xingwenju-programming/post-init-exec-path-from-shell ()
   "exec path fro env"
@@ -56,5 +60,4 @@
     (when (memq window-system '(mac ns))
       (exec-path-from-shell-copy-env "GOPATH")
       (exec-path-from-shell-copy-env "PYTHONPATH")
-      (exec-path-from-shell-initialize)))
-  )
+      (exec-path-from-shell-initialize))))

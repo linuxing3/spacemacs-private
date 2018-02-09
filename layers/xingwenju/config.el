@@ -146,3 +146,10 @@
 			   (const :tag "Centaur" centaur)
 			   (const :tag "Space" space)
 			   (const :tag "Doom" doom)))
+
+(defcustom my-custom-file-list 'centaur
+	"Set package archives from which to fetch."
+	:type '(choice
+          (const :tag "windows-nt" "custom.win.el")
+          (const :tag "darwin" "custom.mac.el")
+          (const :tag "linux" "custom.linux.el")))
