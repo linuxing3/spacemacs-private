@@ -1,9 +1,9 @@
-;;; config.el --- xingwenju Layer packages File for Spacemacs
+;;; config.el --- zilongshanren Layer packages File for Spacemacs
 ;;
-;; Copyright (c) 2014-2016 xingwenju
+;; Copyright (c) 2014-2016 zilongshanren
 ;;
-;; Author: xingwenju <xingwenju@gmail.com>
-;; URL: https://github.com/xingwenju/spacemacs-private
+;; Author: zilongshanren <guanghui8827@gmail.com>
+;; URL: https://github.com/zilongshanren/spacemacs-private
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
@@ -64,10 +64,13 @@
 ;; (set-default 'imenu-auto-rescan t)
 
 ;; https://www.reddit.com/r/emacs/comments/4c0mi3/the_biggest_performance_improvement_to_emacs_ive/
-;; (remove-hook 'find-file-hooks 'vc-find-file-hook)
+(remove-hook 'find-file-hooks 'vc-find-file-hook)
 ;; https://stackoverflow.com/questions/5748814/how-does-one-disable-vc-git-in-emacs
 ;; this settings will cause command `vc-annotate` failed.
+;; 如果把 vc-handled-backends去掉，那么 vc-follow-symlinks 这个选项就会失效
+;; 进而，如果你访问一个在版本控制里面的alias的话，它不会自动去访问原文件，这个是非常不爽的
 ;; (setq vc-handled-backends ())
+
 
 (setq large-file-warning-threshold 100000000)
 ;;http://batsov.com/emacsredux/blog/2015/05/09/emacs-on-os-x/
@@ -92,12 +95,12 @@
             kill-buffer-query-functions))
 
 ;; cleanup recent files
-(defun xingwenju/cleanup-recentf ()
+(defun zilongshanren/cleanup-recentf ()
   (progn
     (and (fboundp 'recentf-cleanup)
          (recentf-cleanup))))
 
-(add-hook 'kill-emacs-hook #'xingwenju/cleanup-recentf)
+(add-hook 'kill-emacs-hook #'zilongshanren/cleanup-recentf)
 
 ;; change evil initial mode state
 (menu-bar-mode t)
@@ -157,12 +160,12 @@ Single Capitals as you type."
               (set (make-local-variable 'electric-pair-mode) nil)))
 
 ;; http://trey-jackson.blogspot.com/2010/04/emacs-tip-36-abort-minibuffer-when.html
-(defun xingwenju/stop-using-minibuffer ()
+(defun zilongshanren/stop-using-minibuffer ()
   "kill the minibuffer"
   (when (and (>= (recursion-depth) 1) (active-minibuffer-window))
     (abort-recursive-edit)))
 
-(add-hook 'mouse-leave-buffer-hook 'xingwenju/stop-using-minibuffer)
+(add-hook 'mouse-leave-buffer-hook 'zilongshanren/stop-using-minibuffer)
 
 (setq tags-add-tables nil)
 

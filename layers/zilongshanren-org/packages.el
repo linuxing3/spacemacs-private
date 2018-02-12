@@ -57,7 +57,7 @@
   (add-hook 'org-mode-hook (lambda () (spacemacs/toggle-line-numbers-off)) 'append)
   (with-eval-after-load 'org
     (progn
-
+      
       (spacemacs|disable-company org-mode)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode
         "," 'org-priority)
@@ -104,7 +104,7 @@
       ;; (add-to-list 'auto-mode-alist '("\.org\\'" . org-mode))
 
       (setq org-todo-keywords
-            (quote ((sequence "TODO(t)" "STARTED(s)" "INPROGRESS(i)" "|" "DONE(d!/!)")
+            (quote ((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d!/!)")
                     (sequence "WAITING(w@/!)" "SOMEDAY(S)" "|" "CANCELLED(c@/!)" "MEETING(m)" "PHONE(p)"))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;; Org clock
@@ -226,8 +226,8 @@ unwanted space when exporting org-mode to html."
           (ad-set-arg 1 fixed-contents)))
 
       ;; define the refile targets
+      (setq org-agenda-file-note (expand-file-name "notes.org" org-agenda-dir))
       (setq org-agenda-file-gtd (expand-file-name "gtd.org" org-agenda-dir))
-    (setq org-agenda-file-note (expand-file-name "notes.org" org-agenda-dir))
       (setq org-agenda-file-journal (expand-file-name "journal.org" org-agenda-dir))
       (setq org-agenda-file-code-snippet (expand-file-name "snippet.org" org-agenda-dir))
       (setq org-default-notes-file (expand-file-name "gtd.org" org-agenda-dir))
@@ -243,30 +243,28 @@ unwanted space when exporting org-mode to html."
       ;;add multi-file journal
       (setq org-capture-templates
             '(("t" "Todo" entry (file+headline org-agenda-file-gtd "Workspace")
-               "** TODO [#B] %?\t%^g\n  %i\n"
+               "* TODO [#B] %?\n  %i\n"
                :empty-lines 1)
-              ("n" "Notes" entry (file+headline org-agenda-file-note "Quick notes")
-               "** %?\t%^g\n  %i\n %U"
+              ("n" "notes" entry (file+headline org-agenda-file-note "Quick notes")
+               "* %?\n  %i\n %U"
                :empty-lines 1)
-			 ("r" "Response" entry (file+headline org-agenda-file-gtd "Workspace")
-				 "** TODO %?\t%^g\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t)
-              ("b" "Quick Ideas" entry (file+headline org-agenda-file-note "Quick Ideas")
-               "** TODO [#B] %?\n  %i\n %U"
+              ("b" "Blog Ideas" entry (file+headline org-agenda-file-note "Blog Ideas")
+               "* TODO [#B] %?\n  %i\n %U"
                :empty-lines 1)
               ("s" "Code Snippet" entry
                (file org-agenda-file-code-snippet)
                "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n#+END_SRC")
-              ("w" "work" entry (file+headline org-agenda-file-gtd "Research and Development")
-               "** TODO [#A] %?\n  %i\n %U"
+              ("w" "work" entry (file+headline org-agenda-file-gtd "Cocos2D-X")
+               "* TODO [#A] %?\n  %i\n %U"
                :empty-lines 1)
               ("c" "Chrome" entry (file+headline org-agenda-file-note "Quick notes")
-               "** TODO [#C] %?\n %(zilongshanren/retrieve-chrome-current-tab-url)\n %i\n %U"
+               "* TODO [#C] %?\n %(zilongshanren/retrieve-chrome-current-tab-url)\n %i\n %U"
                :empty-lines 1)
               ("l" "links" entry (file+headline org-agenda-file-note "Quick notes")
-               "** TODO [#C] %?\%i\n %a \n %U"
+               "* TODO [#C] %?\n  %i\n %a \n %U"
                :empty-lines 1)
               ("j" "Journal Entry"
-               entry (file+olp+datetree org-agenda-file-journal)
+               entry (file+datetree org-agenda-file-journal)
                "* %?"
                :empty-lines 1)))
 
@@ -278,19 +276,13 @@ unwanted space when exporting org-mode to html."
               ("wa" "重要且紧急的任务" tags-todo "+PRIORITY=\"A\"")
               ("wb" "重要且不紧急的任务" tags-todo "-Weekly-Monthly-Daily+PRIORITY=\"B\"")
               ("wc" "不重要且紧急的任务" tags-todo "+PRIORITY=\"C\"")
-              ("h" . "家务安排")
-			  ("ha" "重要且紧急的任务" tags-todo "home")
-			 ("ha" "重要且紧急的任务" tags-todo "home+PROJECT")
-              ("b" "写作" tags "BLOG")
+              ("b" "Blog" tags-todo "BLOG")
               ("p" . "项目安排")
-              ("pw" tags-todo "dev")
-              ("pl" tags-todo "dev+PROJECT")
-			 ("d" . "孩子安排")
-			 ("da" "重要且紧急的任务" tags-todo "home+kids+PRIORITY=\"A\"")
-			 ("da" "重要且紧急的任务" tags-todo "home+kids")
-              ("W" "每周回顾"
+              ("pw" tags-todo "PROJECT+WORK+CATEGORY=\"cocos2d-x\"")
+              ("pl" tags-todo "PROJECT+DREAM+CATEGORY=\"zilongshanren\"")
+              ("W" "Weekly Review"
                ((stuck "") ;; review stuck projects as designated by org-stuck-projects
-                (tags "PROJECT") ;; review all projects (assuming you use todo keywords to designate projects)
+                (tags-todo "PROJECT") ;; review all projects (assuming you use todo keywords to designate projects)
                 ))))
 
       (defvar zilongshanren-website-html-preamble
@@ -456,7 +448,7 @@ holding contextual information."
 (defun zilongshanren-org/init-plain-org-wiki ()
   (use-package plain-org-wiki
     :init
-    (setq pow-directory "~/iCloudDrive/lifehacker/org")))
+    (setq pow-directory "~/org-notes")))
 
 (defun zilongshanren-org/init-worf ()
   (use-package worf

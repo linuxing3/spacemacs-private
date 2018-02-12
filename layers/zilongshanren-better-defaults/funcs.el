@@ -1,16 +1,15 @@
-;;; funcs.el --- xingwenju Layer packages File for Spacemacs
+;;; funcs.el --- zilongshanren Layer packages File for Spacemacs
 ;;
-;; Copyright (c) 2015-2016 xingwenju 
+;; Copyright (c) 2015-2016 zilongshanren 
 ;;
-;; Author: xingwenju <xingwenju@gmail.com>
-;; URL: https://github.com/xingwenju/spacemacs-private
+;; Author: zilongshanren <guanghui8827@gmail.com>
+;; URL: https://github.com/zilongshanren/spacemacs-private
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
 ;;; License: GPLv3
 
 (defun indent-buffer()
-  "indent buffer to full screen"
   (interactive)
   (indent-region (point-min) (point-max)))
 
@@ -26,7 +25,7 @@
         (message "Indent buffer.")))))
 
 ;;http://emacsredux.com/blog/2013/03/26/smarter-open-line/
-(defun xingwenju/smart-open-line ()
+(defun zilongshanren/smart-open-line ()
   "Insert an empty line after the current line.
 Position the cursor at its beginning, according to the current mode."
   (interactive)
@@ -34,7 +33,7 @@ Position the cursor at its beginning, according to the current mode."
   (newline-and-indent))
 
 
-(defun xingwenju/rename-file-and-buffer ()
+(defun zilongshanren/rename-file-and-buffer ()
   "Rename the current buffer and file it is visiting."
   (interactive)
   (let ((filename (buffer-file-name)))
@@ -47,7 +46,7 @@ Position the cursor at its beginning, according to the current mode."
           (rename-file filename new-name t)
           (set-visited-file-name new-name t t)))))))
 
-(defun xingwenju/yank-to-end-of-line ()
+(defun zilongshanren/yank-to-end-of-line ()
   "Yank to end of line."
   (interactive)
   (evil-yank (point) (point-at-eol)))
@@ -131,7 +130,7 @@ Position the cursor at its beginning, according to the current mode."
         (dired-find-alternate-file)
       (dired-find-file-other-window))))
 
-(defun xingwenju/dired-do-command (command)
+(defun zilongshanren/dired-do-command (command)
   "Run COMMAND on marked files. Any files not already open will be opened.
 After this command has been run, any buffers it's modified will remain
 open and unsaved."
@@ -142,7 +141,7 @@ open and unsaved."
             (call-interactively command))
           (dired-get-marked-files))))
 
-(defun xingwenju/dired-up-directory()
+(defun zilongshanren/dired-up-directory()
   "goto up directory and resue buffer"
   (interactive)
   (find-alternate-file ".."))

@@ -15,32 +15,53 @@
 (setq xingwenju-programming-packages
       '(
         ;; nodejs-repl
-        python
-        javascript
+        pyvenv
+        js2-mode
         ;; company ;; add auto-completion in a layer
         ;; (company-anaconda :toggle (configuration-layer/package-usedp 'company))
         exec-path-from-shell
         ))
 
-(defun xingwenju-programming/post-init-javascript ()
+(defun xingwenju-programming/post-init-js2-mode ()
   "Setting js-mode"
   (progn
-    (setq-default js2-basic-offset 2)
-    (setq-default js-indent-level 2)
-    (setq tags-table-list (list "~/workspace/cp-work-puppeteer/src/TAGS"))
-    (add-hook js2-mode-hook x/js2-mode-hook)))
+    (add-hook 'js2-mode-hook 'x/js2-mode-hook)
+    (setq company-backends-js2-mode '(
+                                      (company-dabbrev-code :with company-keywords company-etags)
+                                      company-files company-dabbrev))
+    (with-eval-after-load 'js2-mode
+     (progn
+        (setq-default js2-allow-rhino-new-expr-initializer nil)
+        (setq-default js2-auto-indent-p nil)
+        (setq-default js2-enter-indents-newline nil)
+        (setq-default js2-global-externs '("module" "ccui" "require" "buster" "sinon" "assert" "refute" "setTimeout" "clearTimeout" "setInterval" "clearInterval" "location" "__dirname" "console" "JSON"))
+        (setq-default js2-idle-timer-delay 0.2)
+        (setq-default js2-mirror-mode nil)
+        (setq-default js2-strict-inconsistent-return-warning nil)
+        (setq-default js2-include-rhino-externs nil)
+        (setq-default js2-include-gears-externs nil)
+        (setq-default js2-concat-multiline-strings 'eol)
+        (setq-default js2-rebind-eol-bol-keys nil)
+        (setq-default js2-auto-indent-p t)
+        (setq-default js2-bounce-indent nil)
+        (setq-default js-indent-level 4)
+        (setq-default js2-basic-offset 4)
+        (setq-default js-switch-indent-offset 4)
+        ;; Let flycheck handle parse errors
+        (setq-default js2-mode-show-parse-errors nil)
+        (setq-default js2-mode-show-strict-warnings nil)
+        (setq-default js2-highlight-external-variables t)
+        (setq-default js2-strict-trailing-comma-warning nil)
+        (setq tags-table-list (list "~/workspace/cp-work-puppeteer/src/TAGS"))
+       )
+     )
+    ))
 
 (defun xingwenju-programming/post-init-python ()
   "Python is a easy and quick language"
   (progn
     (setq python-indent-offset 4)
-    (setq python-enable-yapf-format-on-save t)
-    ;; Add elpy
-    (add-to-list 'package-archives
-                 '("elpy" . "http://jorgenschaefer.github.io/packages/")))
-    ;;(package-refresh-contents)
-  ;; ends here
-  )
+    (setq python-enable-yapf-format-on-save t)))
 
 ;; Hook company to python-mode
 ;; (defun xingwenju-programming/post-init-company ()
@@ -61,3 +82,13 @@
       (exec-path-from-shell-copy-env "GOPATH")
       (exec-path-from-shell-copy-env "PYTHONPATH")
       (exec-path-from-shell-initialize))))
+
+(defun xingwenju-programming/post-init-pyvenv ()
+  (use-package pyvenv
+    :config
+    (progn
+      (dolist (mode '(python-mode hy-mode))
+        (spacemacs/set-leader-keys-for-major-mode mode
+          "Ea" 'pyvenv-activate
+          "Ed" 'pyvenv-deactivate
+          "Ew" 'pyvenv-workon)))))

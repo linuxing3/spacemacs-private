@@ -819,7 +819,7 @@ version 2015-08-21"
     (setq new-buffer-name (concat "cmake-" parent-dir))
     (rename-buffer new-buffer-name t)))
 
-;;js2-mode enhancement
+;;js2-mode 增强功能
 (defun x/js2-which-function ()
   ;; clean the imenu cache
   ;; @see http://stackoverflow.com/questions/13426564/how-to-force-a-rescan-in-imenu-by-a-function
@@ -864,7 +864,9 @@ version 2015-08-21"
 (defun x/js2-mode-hook ()
   (progn
     (define-key js2-mode-map "\C-ci" 'js-doc-insert-function-doc-snippet)
+    (defalias 'docf 'js-doc-insert-function-doc-snippet "Document this function")
     (define-key js2-mode-map "@" 'js-doc-insert-tag)
+    (defalias 'doct 'js-doc-insert-tag "Document this tag")
     (global-set-key (kbd "M-s i") 'x/counsel-imenu)
     (modify-syntax-entry ?_ "w")
     (which-function-mode t)
@@ -876,23 +878,9 @@ version 2015-08-21"
     (setq forward-sexp-function nil)
     (set (make-local-variable 'semantic-mode) nil)))
 
-
-;; File exploring
-(defun x/doxymacs-font-lock-hook ()
-  (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
-      (doxymacs-font-lock)))
-
-(defun x/project-name-contains-substring (REGEX)
-  (let ((dir (if (buffer-file-name)
-                 (file-name-directory (buffer-file-name))
-               "")))
-    (string-match-p REGEX dir)))
-
-
-(defvar x/tags-updated-time nil)
-
+;; 标签和智能查找
 (defun x/create-tags-if-needed (SRC-DIR &optional FORCE)
-  "return the full path of tags file"
+  "Create tag for intellisense and return the full path of tags file"
   (let ((dir (file-name-as-directory (file-truename SRC-DIR)))
         file)
     (setq file (concat dir "TAGS"))
@@ -903,6 +891,8 @@ version 2015-08-21"
       (shell-command
        (format "ctags -f %s -e -R %s" file dir)))
     file))
+
+(defvar x/tags-updated-time nil)
 
 (defun x/update-tags ()
   (interactive)
@@ -927,18 +917,28 @@ version 2015-08-21"
         (x/gupdate-tags)
         (message "updated tags after %d seconds." (- (float-time (current-time)) (float-time x/gtags-updated-time))))))
 
+;; 文件浏览
+(defun x/doxymacs-font-lock-hook ()
+  (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
+      (doxymacs-font-lock)))
 
+;; 查找文件名
+(defun x/project-name-contains-substring (REGEX)
+  (let ((dir (if (buffer-file-name)
+                 (file-name-directory (buffer-file-name))
+               "")))
+    (string-match-p REGEX dir)))
+
+
+;; 设置开发环境
 (defun x/setup-develop-environment ()
   (interactive)
-  (when (x/gproject-name-contains-substring "xingwenju")
+  (when (x/project-name-contains-substring "workspace")
     (cond
-     ((x/gproject-name-contains-substring "cocos")
-      ;; C++ project don't need html tags
-      (setq tags-table-list (list (x/gcreate-tags-if-needed "~/workspace/cocos"))))
-     ((x/gproject-name-contains-substring "Github/fireball")
-      (message "load tags for fireball engine repo...")
-      ;; html project donot need C++ tags
-      (setq tags-table-list (list (x/gcreate-tags-if-needed "~/git/cocos")))))))
+     ((x/project-name-contains-substring "puppeteer")
+      (setq tags-table-list (list (x/create-tags-if-needed "~/workspace/cp-work-puppeteer"))))
+     ((x/project-name-contains-substring "parcel")
+      (setq tags-table-list (list (x/create-tags-if-needed "~/workspace/cp-parcel-vue")))))))
 
 
 (defun x/open-current-file-in-vscode ()

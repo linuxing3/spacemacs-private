@@ -2,34 +2,11 @@
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
-;; Avoiding org errors
-(defun x/refresh-packages ()
-  (when (>= emacs-major-version 24)
-    (require 'package)
-    (setq package-archives '(
-                             ("org"       . "http://orgmode.org/elpa/")
-                             ("gnu"       . "http://elpa.gnu.org/packages/")
-                             ("melpa"     . "http://melpa.org/packages/")
-                             ("milkbox" . "http://melpa.milkbox.net/packages/")
-                             ))
-    (package-initialize)))
-;; (x/refresh-packages)
-;; Using different custom file according to system type
-(defun x/load-custom-file-system-type ()
-  "Load custom file according the system type"
-  (interactive)
-  (setq custom-files-list '(
-                            (windows-nt . "custom.win.el")
-                            (darwin . "custom.mac.el")
-                            (linux . "custom.linux.el")
-                            ))
-  (setq custom-file (expand-file-name
-                     (alist-get system-type custom-files-list)
-                     dotspacemacs-directory))
-  ;; Load the custom file
-  (if (file-exists-p custom-file)
-      (message (format "%s" custom-file))
-    (load custom-file 'no-error 'no-message)))
+;; Auto refresh package
+(load-file (expand-file-name "elisp/basic/init-package.el" dotspacemacs-directory))
+
+;; Auto change custom file
+(load-file (expand-file-name "elisp/basic/init-custom.el" dotspacemacs-directory))
 
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
@@ -167,7 +144,9 @@ values."
      ;; ----------------------------------------------------------------
      ;; spell
      ;; ----------------------------------------------------------------
-     spell-checking
+     ;; (spell-checking :variables
+     ;;                 spell-checking-enable-auto-dictionary t
+     ;;                 spell-checking-enable-by-default nil)
      ;; ----------------------------------------------------------------
      ;; elfeed
      ;; ----------------------------------------------------------------
@@ -287,7 +266,10 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-light
+   dotspacemacs-themes '(material-light
+                         zenburn
+                         monokai
+                         spacemacs-light
                          spacemacs-dark)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -420,7 +402,15 @@ values."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers t
+   dotspacemacs-line-numbers
+   '(:relative nil
+     :disabled-for-modes dired-mode
+                         doc-view-mode
+                         markdown-mode
+                         org-mode
+                         pdf-view-mode
+                         text-mode
+     :size-limit-kb 1000)
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -483,6 +473,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (setq warning-minimum-level :error)
 
+  ;; Disable .zshrc warning
+  (setq exec-path-from-shell-check-startup-files nil)
+
   ;; hack for remove purpose mode
   (setq purpose-mode nil)
 
@@ -509,21 +502,14 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  ;; Disable .zshrc warning
-  (setq-default exec-path-from-shell-check-startup-files nil)
-
   ;; company
   ;; (global-company-mode)
+
+  ;; Golden Ratio
   (golden-ratio-mode 1)
 
   ;; ranger
   (setq magit-repository-directories '("~/workspace/"))
-
-  ;; chinese
-  (setq ispell-program-name "aspell")
-  (load-file (expand-file-name "elisp/basic/init-chinese.fira.el" dotspacemacs-directory))
-
-  ;; (spacemacs//set-monospaced-font   "Source Code Pro" "Hiragino Sans GB" 14 16)
 
   ;; Customize Document
   (setq spacemacs-space-doc-modificators
@@ -540,15 +526,15 @@ you should place your code here."
   ;; Plain Text title
   (setq spaceline-org-clock-p t)
 
-  ;; neotree theme
-
-  ;; set javascript
-  ;; set gnus
-  (load-file (expand-file-name "elisp/basic/init-gnus.el" dotspacemacs-directory))
-
   ;; Search engine
   (setq browse-url-browser-function 'browse-url-generic
         engine/browser-function 'browse-url-generic)
+
+  ;; Font Setting
+  ;; (load-file (expand-file-name "elisp/basic/init-chinese.fira.el" dotspacemacs-directory))
+
+  ;; set gnus
+  ;; (load-file (expand-file-name "elisp/basic/init-gnus.el" dotspacemacs-directory))
 
   ;; End of user-config
   )
